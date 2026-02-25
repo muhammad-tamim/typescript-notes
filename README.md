@@ -9,6 +9,7 @@
     - [1. Inference:](#1-inference)
     - [2. Explicit Typing (Type Annotation):](#2-explicit-typing-type-annotation)
     - [When to use what:](#when-to-use-what)
+- [Number, Boolean, String:](#number-boolean-string)
 
 
 # TypeScript Introduction:
@@ -143,8 +144,18 @@ Type inference is when TypeScript guess and assigns a type automatically based o
 let age = 20; // let age: number
 let myName = "Tamim"; // let name: string
 let active = true;  // let active: boolean
+
+
 ```
 ![alt text](./assets/images/typeScript-introduction/type-infers.png)
+
+```ts
+const user = {
+    name: "Alice", // (property) name: string
+    age: 30, // (property) age: number
+    isAdmin: true // (property) isAdmin: boolean
+};
+```
 
 ```ts
 const id = 2; // const id: 2
@@ -163,3 +174,16 @@ let isAdmin: boolean = false;
 ### When to use what: 
 - Use inference for small, local variables.
 - Use explicit typing for important or shared code.
+
+# Number, Boolean, String:
+
+```ts
+let age: number = 25;
+let price: number = 99.99;
+
+let isLoggedIn: boolean = true;
+let hasPaid: boolean = false;
+
+let username: string = "Tamim";
+let greeting: string = `Hello, ${username}!`;
+```

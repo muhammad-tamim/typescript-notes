@@ -1,4 +1,3 @@
-- [number, bigint, boolean, string, symbol, null, undefined:](#number-bigint-boolean-string-symbol-null-undefined)
 - [any, unknown](#any-unknown)
     - [any](#any)
     - [unknown](#unknown)
@@ -47,43 +46,6 @@
         - [Using Duck Typing:](#using-duck-typing)
 
 
-
-# number, bigint, boolean, string, symbol, null, undefined: 
-
-```ts
-// 1. number
-let age: number = 25;
-let price: number = 99.99;
-
-
-// 2. bigint
-let bigNumber: bigint = 100n;
-let anotherBig: bigint = BigInt(100); // same as 100n
-let bigSum: bigint = bigNumber + anotherBig;
-console.log(bigSum); // 200n
-
-// 3. boolean
-let isLoggedIn: boolean = true;
-let hasPaid: boolean = false;
-
-// 4. string
-let username: string = "Tamim";
-let greeting: string = `Hello, ${username}!`;
-console.log(greeting); // Hello, Tamim!
-
-// 5. symbol
-let sym1: symbol = Symbol("id");
-let sym2: symbol = Symbol("id");
-console.log(sym1 === sym2); // false
-
-// 6. null
-let emptyValue: null = null;
-console.log(emptyValue); // null
-
-// 7. undefined
-let notAssigned: undefined = undefined;
-console.log(notAssigned); // undefined
-```
 
 # any, unknown
 
