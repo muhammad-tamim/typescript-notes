@@ -1,9 +1,9 @@
 <h1 align="center">TypeScript Notes</h1>
 
 - [TypeScript Introduction:](#typescript-introduction)
-    - [What is TypeScript:](#what-is-typescript)
-    - [TypeScript Features:](#typescript-features)
-    - [How to run TypeScript:](#how-to-run-typescript)
+  - [What is TypeScript:](#what-is-typescript)
+  - [TypeScript Main Features:](#typescript-main-features)
+  - [How to run TypeScript:](#how-to-run-typescript)
     - [Explicit Typing and Type Inference:](#explicit-typing-and-type-inference)
 - [number, bigint, boolean, string, symbol, null, undefined:](#number-bigint-boolean-string-symbol-null-undefined)
 - [any, unknown](#any-unknown)
@@ -56,99 +56,115 @@
 
 # TypeScript Introduction:
 
-### What is TypeScript:
+## What is TypeScript:
 
-TypeScript is a superset of JavaScript means its includes everthing from javaScript plus add extra type featues on top of it.
-![image](./images/typeScript/TypeScript-introduction/hello-world.webp)
+TypeScript is a superset of JavaScript that design to make large-scale application development safer, more predictable, and easier to maintain. It is a compiled language, meaning TypeScript code first converted into JavaScript before execution.
 
-Note: TypeScript is a compiled language, meaning TypeScript code is first converted into JavaScript before execution.
+![image](./assets/images/typeScript-introduction/hello-world.webp)
 
-### TypeScript Features: 
-- Static Typing: Allows you to define types for variables, functions, objects, etc.
-- Static Type Checking: TypeScript detects type errors before runtime, both while writing code (through the editor) and during compilation with tsc.
-- Code Suggestions & IntelliSense: TypeScript improves your editor experience with autocompletion and better hints.
-- Type Inference: TypeScript can automatically understand (infer) types even when you don’t explicitly declare them.
+Note: Superset means a language that includes all features of another language, plus add additional features.
+
+
+## TypeScript Main Features: 
+- Static Typing: Allows us to define types.
+- Static Type Checking: TypeScript detects type errors during development.
+- Code Suggestions & IntelliSense:
   
 
-### How to run TypeScript:
+## How to run TypeScript:
 
-Step 1: Install Node.js for linux using NVM with NPM: 
+- Step 1: Install Node.js for windows/linux/mac using NVM with NPM:
 
-![image](./images/typeScript/TypeScript-introduction/noode.js-installing.png)
+![alt text](./assets/images/typeScript-introduction/node.js-installing.png)
 
-Note: 
+- Step 2: Install TypeScript:
 
-When we used js we don't need to worry about node version, but when we used typescript we need to control our version, because if we used node version 19.9.0 and anoter computer if we used node version 24.4.1 or another version the same typescript might not work, for this issue we have to contorl node vresion. for that there are two  some way available using NVM or Docker. For now Im using NVM
-
-For installing a differnt node verison: 
-
-```bash
-nvm i 19.9.0
-```
-
-- For check all install Node Version:
-
-```bash
-nvm ls
-```
-
-- For switching a different install node version: 
-
-```bash
-nvm use 24.4.1
-```
-
-Step 2: Install TypeScript:
-
-If you run this command, then you need to install the TypeScript for every porject:
-
-```bash
-npm install typescript --save-dev
-```
-
-If you run this command, then you need to install the TypeScript once for your computer.
+  - Option 1: Global install (Good for learning raw TS)
 
 ```bash
 npm install -g typescript
 ```
 
-step 3: Convert your ts file to js:
+By using the -g flag, we install TypeScript globally on our computer. But when we build real projects, we should install TypeScript as a dev dependency, so it only works inside that project.
 
-test.ts:
+  - Option 2: Project-based install (Recommended for real projects)
+
+```bash
+npm install typescript --save-dev
+```
+Now TypeScript is installed only inside that project. To use the compiler:
+
+```bash
+npx tsc index.ts
+```
+
+- step 3: First program: 
 
 ```ts
-const firstName: string = "Muhammad";
-const lastName: string = "Tamim";
-
-console.log(firstName + " " + lastName)
-
-console.log(firstName)
+const str: string = 'Hello World'
+console.log(str)
 ```
+
+Now How to See the Output?
+
+  - Option 1: Using Node.js directly (Node 22.6.0+)
 
 ```bash
-tsc test.ts
+node index.ts
 ```
 
-Now you see a test.js file added with:
+Output: 
+```
+Hello World
+```
+
+We might wondered that how node understand ts code? 
+
+Starting from Node.js v22.6.0, Node introduced Type Stripping. Type Stripping means:
+- Node removes typeScript from the file
+- Then executes the remaining JavaScript
+So Node is NOT running TypeScript directly. It removes the types first, then runs JavaScript behind the scenes.
+
+Note: Still Node.js won't fully support TS, It only can remove basic type annotations. So when we do `node index.ts` advance TS features like enum, namespace etc  might not works. For that case we need to manually compiled the ts code by using TypeScript Compiler `tsc` so se the output of our code in raw js. 
+
+  - Option 2: Using TypeScript Compiler (TSC)
+Compile the file manually using TypeScript Compiler:
+
+```bash
+tsc index.ts
+```
+
+Now we can see a new index.js file create, se basically TSC convert you index.ts to index.js:
 
 ```js
-var firstName = "Muhammad";
-var lastName = "Tamim";
-console.log(firstName + " " + lastName);
+// index.js
+var str = 'Hello World';
+console.log(str);
+```
+so, now our code runner extension on vs code works, or you can see output manually by using `node index.js`: 
 
 ```
+Hello World
+```
 
+  - Option 3: Using ts-node (Development shortcut): 
 
-Now you can use `node test.js` to see the output: 
-
-Note: we need to conver the ts file to js file because node dones't understand the TS code, it only understand the js code.
-
-but when node relesed their 22.6.0  they experimentally intoduce typescript suppor using typeStripg. TypeStrping means node.js remove all ts to you code and then your code is gonna be js code, then node.js run this js code. and latyer they enable this experieceml feture to buidling feature for later versions. But still node.js not fully suppor this feture. for some typescipt that need transformation , we have to use a node.js flag for this. So the best practice using typectipt compiler to conver the ts code to js and then print the output.
-
-so for now if we write a ts code we can direlty run this ts code by : 
+Install `ts-node` along with ts: 
 
 ```bash
-node test.ts
+npm install typescript ts-node --save-dev
+```
+
+Then run: 
+
+```bash
+npx ts-node index.ts
+```
+
+This compiles the TypeScript in memory and runs the output instantly. Basically Behind the scenes it do:
+
+```
+TypeScript → JavaScript → Node execution
 ```
 
 ### Explicit Typing and Type Inference: 
