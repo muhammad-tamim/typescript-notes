@@ -3,6 +3,7 @@
 - [TypeScript Introduction:](#typescript-introduction)
   - [What is TypeScript:](#what-is-typescript)
   - [TypeScript Main Features:](#typescript-main-features)
+  - [JavaScript Vs TypeScript](#javascript-vs-typescript)
   - [How to run TypeScript:](#how-to-run-typescript)
     - [Explicit Typing and Type Inference:](#explicit-typing-and-type-inference)
 - [number, bigint, boolean, string, symbol, null, undefined:](#number-bigint-boolean-string-symbol-null-undefined)
@@ -64,12 +65,20 @@ TypeScript is a superset of JavaScript that design to make large-scale applicati
 
 Note: Superset means a language that includes all features of another language, plus add additional features.
 
-
 ## TypeScript Main Features: 
 - Static Typing: Allows us to define types.
-- Static Type Checking: TypeScript detects type errors during development.
+- Static Type Checking: TypeScript detects type errors while writing code (during development) and at compile time, before the code runs.
 - Code Suggestions & IntelliSense:
-  
+
+## JavaScript Vs TypeScript
+
+| JavaScript                                                   | TypeScript                                                                               |
+| ------------------------------------------------------------ | ---------------------------------------------------------------------------------------- |
+| A scripted programming language                              | A compiled language that is superset of JS                                               |
+| Runs directly in browsers or Node.js (no compilation needed) | Must be compiled to JavaScript using the TypeScript compiler (tsc)                       |
+| Errors appear only at runtime                                | Errors while writing code (during development) and at compile time, before the code runs |
+| Prototype based OOP                                          | Class-based OOP syntax (compiles to JS prototypes)                                       |
+| Basic editor support, limited IntelliSense.                  | Rich editor support, full IntelliSense with type information                             |
 
 ## How to run TypeScript:
 
