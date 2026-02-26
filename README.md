@@ -26,6 +26,9 @@
   - [Array:](#array)
   - [Tuple:](#tuple)
 - [object:](#object)
+- [Function:](#function)
+    - [void:](#void)
+    - [never:](#never-1)
 
 
 # TypeScript Introduction:
@@ -487,3 +490,48 @@ let userConst = {
 userConst.name = "Muhamamd" // Cannot assign to 'name' because it is a read-only property.
 ```
 
+# Function: 
+
+```ts
+function add(a: number, b: number): number {
+    return a + b;
+}
+
+let greet1 = (name: string): string => {
+    return `Hello, ${name}`;
+}
+```
+
+### void:
+void is used for functions that do not return anything. You can’t return any value (except undefined optionally).
+
+```ts
+function sayHello(): void {
+    console.log("Hello")
+}
+
+sayHello() // Hello
+```
+
+```ts
+function optionalReturn(): void {
+    // return undefined;
+    // same as
+    return;
+}
+
+console.log(optionalReturn())
+```
+
+### never: 
+never represents a value that can never exist. It is used for functions that never return or for logically unreachable code paths.
+
+```ts
+function throwError(): never {
+    throw new Error("Oops");
+}
+
+function infiniteLoop(): never {
+    while(true) {}
+}
+```

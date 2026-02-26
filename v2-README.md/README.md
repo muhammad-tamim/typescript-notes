@@ -1,6 +1,3 @@
-- [Function:](#function)
-    - [void:](#void)
-    - [never:](#never)
 - [type alias, interface and intersection:](#type-alias-interface-and-intersection)
     - [type alias](#type-alias)
     - [interface](#interface)
@@ -31,52 +28,6 @@
         - [Using Methods Overriding:](#using-methods-overriding)
         - [Using Duck Typing:](#using-duck-typing)
 
-
-
-# Function: 
-
-```ts
-function add(a: number, b: number): number {
-    return a + b;
-}
-
-let greet1 = (name: string): string => {
-    return `Hello, ${name}`;
-}
-```
-
-### void:
-void is used for functions that do not return anything. You can’t return any value (except undefined optionally).
-
-```ts
-function sayHello(): void {
-    console.log("Hello")
-}
-
-sayHello() // Hello
-```
-
-```ts
-function optionalReturn(): void {
-    // return undefined;
-    return;
-}
-
-console.log(optionalReturn())
-```
-
-### never: 
-Represents a function that cannot produce a value at all awalys throw an error or infinite loop:
-
-```ts
-function throwError(): never {
-    throw new Error("Oops");
-}
-
-function infiniteLoop(): never {
-    while(true) {}
-}
-```
 
 
 # type alias, interface and intersection:
