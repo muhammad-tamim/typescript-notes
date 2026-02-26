@@ -21,6 +21,9 @@
   - [readonly:](#readonly)
   - [as const:](#as-const)
 - [union:](#union)
+- [enum:](#enum)
+  - [Array:](#array)
+  - [Tuple:](#tuple)
 
 
 # TypeScript Introduction:
@@ -382,4 +385,58 @@ let id: number | string;
 id = 234
 id = 'id123'
 // id = true // Type 'boolean' is not assignable to type 'string | number'.
+```
+
+# enum: 
+Enum is a collection of named constants grouped under a single type, which can have numeric (default) or string values.
+
+```ts
+enum Days {
+    saturday, // 0
+    sunday, // 1
+    monday // 2
+}
+
+let dayName: Days = Days.saturday
+console.log(dayName) // 0
+
+// Note: If you don’t assign values, TypeScript gives automatic numeric values starting from 0.
+```
+
+```ts
+enum Direction {
+    Left = "left",
+    Right = "right",
+    Up = "up",
+    Down = "down"
+}
+
+let move: Direction = Direction.Left;
+console.log(move) // left
+```
+
+
+
+
+## Array: 
+
+```ts
+let numbers: number[] = [1, 2, 3]
+let characters: string[] = ['a', 'b']
+
+let mix: (string | number)[] = [1, "Hello", 2, 4, 'hi'] // union array
+```
+
+## Tuple:
+Tuples are fixed-length arrays with fixed types for each element.
+
+```ts
+let user1: [string, number] = ['tamim', 20]
+let user2: [number, number] = [20, 20]
+
+// tuple with optional element
+let user3: [string, number?];
+
+user3 = ["Tamim"];      
+user3 = ["Tamim", 20];  
 ```
