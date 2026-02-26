@@ -22,6 +22,7 @@
   - [as const:](#as-const)
 - [union:](#union)
 - [enum:](#enum)
+- [Array and Tuple:](#array-and-tuple)
   - [Array:](#array)
   - [Tuple:](#tuple)
 
@@ -415,8 +416,7 @@ let move: Direction = Direction.Left;
 console.log(move) // left
 ```
 
-
-
+# Array and Tuple: 
 
 ## Array: 
 
