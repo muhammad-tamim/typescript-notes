@@ -1,4 +1,3 @@
-- [Type Assertion:](#type-assertion)
 - [Type Guards](#type-guards)
     - [Typeof:](#typeof)
     - [in Operator:](#in-operator)
@@ -26,33 +25,6 @@
 
 
 
-# Type Assertion: 
-
-Sometimes TypeScript doesn’t know the exact type and cannot infers type correctly. Type assertion lets you override TypeScript's type and force a value to be treated as a specific type. 
-
-we used type assertion: 
-- When we know more about the type than TypeScript
-- for third party packages that dones support ts
-
-We can perform type using using `as` keyword: 
-
-```ts
-let someValue: any = "Hello TypeScript";
-let strLength: number = (someValue as string).length;
-
-console.log(strLength); // 17
-```
-
-```ts
-type User = {
-    name: string;
-    age: number;
-};
-
-let data = {} as User;
-data.name = "Tamim";
-data.age = 20;
-```
 
 # Type Guards
 Type guards help TypeScript narrow a variable’s type at runtime.

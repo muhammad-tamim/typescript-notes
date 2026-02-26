@@ -33,6 +33,7 @@
   - [Type Alias:](#type-alias)
   - [Interface:](#interface)
   - [intersection:](#intersection)
+- [Type Assertion:](#type-assertion)
 
 
 # TypeScript Introduction:
@@ -742,4 +743,31 @@ const p2: Person = {
 Type '{ name: string; }' is not assignable to type 'Person'.
   Property 'age' is missing in type '{ name: string; }' but required in type 'Age'.
 */
+```
+
+# Type Assertion: 
+Sometimes TypeScript doesn’t know the exact type and cannot infers type correctly. Type assertion lets you override TypeScript's type and force a value to be treated as a specific type. 
+
+we used type assertion: 
+- When we know more about the type than TypeScript
+- For third party packages that doesn't  support ts
+
+We can perform type assertion using using `as` keyword: 
+
+```ts
+let someValue: any = "Hello TypeScript";
+let strLength: number = (someValue as string).length;
+
+console.log(strLength); // 17
+```
+
+```ts
+type User = {
+    name: string;
+    age: number;
+};
+
+let data = {} as User;
+data.name = "Tamim";
+data.age = 20;
 ```
