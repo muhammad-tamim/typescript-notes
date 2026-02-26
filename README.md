@@ -16,6 +16,11 @@
   - [Never:](#never)
   - [Undefined:](#undefined)
   - [Null:](#null)
+- [Literal, as const and readonly:](#literal-as-const-and-readonly)
+  - [Literal:](#literal)
+  - [readonly:](#readonly)
+  - [as const:](#as-const)
+- [union:](#union)
 
 
 # TypeScript Introduction:
@@ -271,4 +276,110 @@ let selectedUser: string | null = null;
 
 selectedUser = "Tamim";
 selectedUser = null;
+```
+
+#  Literal, as const and readonly:
+
+## Literal: 
+Represents an exact value that a variable can hold. Means it's not represent a data type as a type, its represents an exact value as a type.
+
+```ts
+let direction: 'left';
+
+// direction = 'right'; // Type '"right"' is not assignable to type '"left"'.
+
+direction = 'left'
+```
+
+Literal types are commonly combined with unions:
+
+```ts
+let move: 'left' | 'right';
+
+move = 'left';
+move = 'right';
+// move = 'up';  // Type '"up"' is not assignable to type '"left" | "right"'.
+```
+
+## readonly:
+readonly prevents a object property or array element being reassigned after initialization.  
+
+Note; unlike literal, its represent a data types as a type. so it just prevent us to modify a value after initialization.
+
+
+```ts
+const user: { readonly id: string, name: string } = {
+    id: "123", // (property) id: string
+    name: "Tamim" // (property) name: string
+};
+
+// user.id = "456";  // Cannot assign to 'id' because it is a read-only property.
+
+user.name = "Alex";
+```
+
+```ts
+const numbers: readonly number[] = [1, 2, 3];
+
+// numbers.push(4); 
+// Property 'push' does not exist on type 'readonly number[]'.
+```
+
+Note: readonly is a shallow restriction. It does NOT deeply freeze nested objects or arrays.
+
+
+## as const:
+Automatically converts a value to its most specific literal type and makes it deeply readonly. so, its combine literal type and readonly at a time. Means it represents a value as a type (literal) +  prevent us to modify a value after initialization (readonly).
+
+
+```ts
+const directions = ["left", "right", "up", "down"] as const; // const directions: readonly ["left", "right", "up", "down"]
+
+// directions.push("forward"); // Property 'push' does not exist on type 'readonly ["left", "right", "up", "down"]'.
+```
+
+
+```ts
+const person = {
+    name: "Tamim",
+    age: 20
+} as const;
+
+/*
+const person: {
+    readonly name: "Tamim";
+    readonly age: 20;
+}
+*/
+
+// person.name = "Alex"; // Cannot assign to 'name' because it is a read-only property.
+```
+
+# union: 
+Combine multiple literal types or general types into one variable. It is written using the pipe (|) symbol.
+
+- literal union: 
+
+```ts
+let direction: "left" | "right"; 
+direction = "left";
+direction = "right"
+// direction = "UP" // Type '"UP"' is not assignable to type '"left" | "right"'.
+```
+```ts
+let dice: 1 | 2 | 3 | 4 | 5 | 6; // literal union
+
+dice = 3;
+dice = 6;
+dice = 7; // Type '7' is not assignable to type '1 | 2 | 3 | 4 | 5 | 6'.
+```
+
+- general union:
+
+```ts
+let id: number | string; 
+
+id = 234
+id = 'id123'
+// id = true // Type 'boolean' is not assignable to type 'string | number'.
 ```
