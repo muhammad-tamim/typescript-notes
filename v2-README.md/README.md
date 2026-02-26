@@ -1,6 +1,3 @@
-- [any, unknown](#any-unknown)
-    - [any](#any)
-    - [unknown](#unknown)
 - [literal, union, enum, and as const:](#literal-union-enum-and-as-const)
     - [Literal:](#literal)
     - [union:](#union)
@@ -45,38 +42,6 @@
         - [Using Methods Overriding:](#using-methods-overriding)
         - [Using Duck Typing:](#using-duck-typing)
 
-
-
-# any, unknown
-
-### any
-
-any is disables the TypeScript type checking. Means we can assign any value to it, and TypeScript won’t give errors like a normal js.
-
-```ts
-let something: any;
-
-something = 42;         // number
-something = "Hello";    // string
-something = true;       // boolean
-something = [1, 2, 3]; // array
-
-console.log(something);
-```
-### unknown
-unknown is like any, but safer. here we can assign any value to an unknown variable, but you cannot use it directly without type checking. You must check the type first, using typeof, Array.isArray(), or other type guards.
-
-```ts
-let value: unknown;
-
-value = "Hello";    // string
-value = true;       // boolean
-value = 10.23435;         // number
-
-// console.log(value.toFixed(2)); // 'value' is of type 'unknown'.
-
-console.log(typeof value === 'number' && value.toFixed(2)) // 10.23
-```
 
 
 # literal, union, enum, and as const:

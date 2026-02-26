@@ -10,6 +10,12 @@
     - [2. Explicit Typing (Type Annotation):](#2-explicit-typing-type-annotation)
     - [When to use what:](#when-to-use-what)
 - [Number, Boolean, String:](#number-boolean-string)
+- [Any, Unknown, Never, undefined \& null](#any-unknown-never-undefined--null)
+  - [any](#any)
+  - [unknown](#unknown)
+  - [Never:](#never)
+  - [Undefined:](#undefined)
+  - [Null:](#null)
 
 
 # TypeScript Introduction:
@@ -186,4 +192,83 @@ let hasPaid: boolean = false;
 
 let username: string = "Tamim";
 let greeting: string = `Hello, ${username}!`;
+```
+
+# Any, Unknown, Never, undefined & null
+
+## any
+any disables TypeScript’s type checking for that specific variable. It allows us to assign any value and perform any operation without compile-time errors.
+
+```ts
+let something: any;
+
+something = 42;         // number
+something = "Hello";    // string
+something = true;       // boolean
+something = [1, 2, 3]; // array
+```
+
+Since, any bypasses type safety, TypeScript will not prevent invalid operations:
+
+```ts
+something.nonExistentMethod(); // No error at compile time (unsafe)
+```
+
+Note: It is strongly recommended to avoid any in production code because it removes all static type guarantees and can introduce hidden runtime bugs.
+
+## unknown
+unknown is similar to any, but type-safe. We can assign any value to an unknown variable, but cannot perform operations on it until narrow its type using type guards such as typeof, instanceof, Array.isArray(), or custom type guards.
+
+```ts
+let value: unknown;
+
+value = "Hello";   // string
+value = true;      // boolean
+value = 10.23435;  // number
+
+// console.log(value.toFixed(2)); 
+// Error: Object is of type 'unknown'.
+```
+
+we must check the type before using it:
+
+```ts
+console.log(typeof value === "number" && value.toFixed(2)); // 10.23
+```
+
+Note: A type guard is a runtime check that narrows a variable’s type within a specific scope so TypeScript can safely infer a more specific type.
+
+## Never: 
+never represents a value that can never exist. It is used for functions that never return or for logically unreachable code paths.
+
+```ts
+function throwError(message: string): never {
+  throw new Error(message);
+}
+```
+
+```ts
+function infiniteLoop(): never {
+  while (true) {}
+}
+```
+
+## Undefined: 
+undefined means a variable has been declared but not assigned a value.
+
+```ts
+let notAssigned: undefined = undefined;
+console.log(notAssigned); // undefined
+```
+
+Note: In JavaScript, variables are undefined by default if not initialized. In TypeScript, you must explicitly include undefined in the type if a value may be missing.
+
+## Null: 
+null represents an intentional absence of a value. It is typically used when you explicitly want to indicate that something is empty or not set.
+
+```ts
+let selectedUser: string | null = null;
+
+selectedUser = "Tamim";
+selectedUser = null;
 ```
