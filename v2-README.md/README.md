@@ -1,5 +1,4 @@
 - [type alias, interface and intersection:](#type-alias-interface-and-intersection)
-    - [type alias](#type-alias)
     - [interface](#interface)
     - [intersection:](#intersection)
 - [Type Assertion:](#type-assertion)
@@ -31,65 +30,6 @@
 
 
 # type alias, interface and intersection:
-
-### type alias 
-The type keyword is used to create an alias for any type—primitive, object, union, tuple, etc. Means a type alias allows you to define a custom type that can be reused throughout your code.
-
-```ts
-// Without type alias
-const user1: {
-    id: number;
-    name: string;
-    isAdmin?: boolean; 
-} = {
-    id: 1,
-    name: "Tamim",
-    isAdmin: true
-}
-
-// with type alias
-type User = {
-    id: number;
-    name: string;
-    isAdmin?: boolean; // optional property
-};
-
-const user2: User = {
-    id: 2,
-    name: "Nasrin"
-};
-
-const user3: User = {
-    id: 3,
-    name: "Kuddus"
-};
-```
-
-```ts
-// without type alias
-const sum = (n1: number, n2: number): number => {
-    return n1 + n2
-}
-
-// with type alias
-type Add = (num1: number, num2: number) => number
-
-const sum2: Add = (num1, num2) => {
-    return num1 + num2
-}
-
-const sum3: Add = function (num1, num2) {
-    return num1 + num2;
-};
-```
-
-```ts
-// Union type alias
-type ID = string | number;
-
-const userId1: ID = "abc123";
-const userId2: ID = 101;
-```
 
 ### interface 
 

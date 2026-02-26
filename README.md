@@ -29,6 +29,7 @@
 - [Function:](#function)
     - [void:](#void)
     - [never:](#never-1)
+- [Type Alias:](#type-alias)
 
 
 # TypeScript Introduction:
@@ -534,4 +535,63 @@ function throwError(): never {
 function infiniteLoop(): never {
     while(true) {}
 }
+```
+
+# Type Alias: 
+A type alias allows you to define a custom type that can be reused throughout your code. We need to use `type` keyword to create an type alias.
+
+```ts
+// Without type alias
+const user1: {
+    id: number;
+    name: string;
+    isAdmin?: boolean; 
+} = {
+    id: 1,
+    name: "Tamim",
+    isAdmin: true
+}
+
+// with type alias
+type User = {
+    id: number;
+    name: string;
+    isAdmin?: boolean; // optional property
+};
+
+const user2: User = {
+    id: 2,
+    name: "Nasrin"
+};
+
+const user3: User = {
+    id: 3,
+    name: "Kuddus"
+};
+```
+
+```ts
+// without type alias
+const sum = (n1: number, n2: number): number => {
+    return n1 + n2
+}
+
+// with type alias
+type Add = (num1: number, num2: number) => number
+
+const sum2: Add = (num1, num2) => {
+    return num1 + num2
+}
+
+const sum3: Add = function (num1, num2) {
+    return num1 + num2;
+};
+```
+
+```ts
+// Union type alias
+type ID = string | number;
+
+const userId1: ID = "abc123";
+const userId2: ID = 101;
 ```
