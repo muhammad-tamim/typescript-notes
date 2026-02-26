@@ -25,6 +25,7 @@
 - [Array and Tuple:](#array-and-tuple)
   - [Array:](#array)
   - [Tuple:](#tuple)
+- [object:](#object)
 
 
 # TypeScript Introduction:
@@ -440,3 +441,49 @@ let user3: [string, number?];
 user3 = ["Tamim"];      
 user3 = ["Tamim", 20];  
 ```
+
+# object: 
+
+```ts
+let person: {
+    name: string;
+    age: number;
+    isAdmin: boolean
+} = {
+    name: "Tamim",
+    age: 20,
+    isAdmin: true
+}
+
+// Optional Properties
+
+let user: {
+    name: string,
+    age?: number
+} = {
+    name: "Tamim"
+}
+
+console.log(person)
+console.log(user)
+
+// Readonly Properties
+let admin: {
+    readonly id: number;
+    name: string;
+} = {
+    id: 1,
+    name: "Tamim"
+};
+
+admin.id = 2; // Cannot assign to 'id' because it is a read-only property.
+
+// as const
+let userConst = {
+    name: "Tamim",
+    age: 20
+} as const;
+
+userConst.name = "Muhamamd" // Cannot assign to 'name' because it is a read-only property.
+```
+

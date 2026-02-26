@@ -1,7 +1,6 @@
 - [Function:](#function)
     - [void:](#void)
     - [never:](#never)
-- [object:](#object)
 - [type alias, interface and intersection:](#type-alias-interface-and-intersection)
     - [type alias](#type-alias)
     - [interface](#interface)
@@ -78,52 +77,6 @@ function infiniteLoop(): never {
     while(true) {}
 }
 ```
-
-# object:
-
-```ts
-let person: {
-    name: string;
-    age: number;
-    isAdmin: boolean
-} = {
-    name: "Tamim",
-    age: 20,
-    isAdmin: true
-}
-
-// Optional Properties
-
-let user: {
-    name: string,
-    age?: number
-} = {
-    name: "Tamim"
-}
-
-console.log(person)
-console.log(user)
-
-// Readonly Properties
-let admin: {
-    readonly id: number;
-    name: string;
-} = {
-    id: 1,
-    name: "Tamim"
-};
-
-// admin.id = 2; // Cannot assign to 'id' because it is a read-only property.
-
-// as const
-let userConst = {
-    name: "Tamim",
-    age: 20
-} as const;
-
-userConst.name = "Muhamamd" // Cannot assign to 'name' because it is a read-only property.
-```
-
 
 
 # type alias, interface and intersection:
