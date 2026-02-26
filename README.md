@@ -25,11 +25,14 @@
 - [Array and Tuple:](#array-and-tuple)
   - [Array:](#array)
   - [Tuple:](#tuple)
-- [object:](#object)
 - [Function:](#function)
     - [void:](#void)
     - [never:](#never-1)
-- [Type Alias:](#type-alias)
+- [Object:](#object)
+- [Type Alias, Interface and Intersection:](#type-alias-interface-and-intersection)
+  - [Type Alias:](#type-alias)
+  - [Interface:](#interface)
+  - [intersection:](#intersection)
 
 
 # TypeScript Introduction:
@@ -446,51 +449,6 @@ user3 = ["Tamim"];
 user3 = ["Tamim", 20];  
 ```
 
-# object: 
-
-```ts
-let person: {
-    name: string;
-    age: number;
-    isAdmin: boolean
-} = {
-    name: "Tamim",
-    age: 20,
-    isAdmin: true
-}
-
-// Optional Properties
-
-let user: {
-    name: string,
-    age?: number
-} = {
-    name: "Tamim"
-}
-
-console.log(person)
-console.log(user)
-
-// Readonly Properties
-let admin: {
-    readonly id: number;
-    name: string;
-} = {
-    id: 1,
-    name: "Tamim"
-};
-
-admin.id = 2; // Cannot assign to 'id' because it is a read-only property.
-
-// as const
-let userConst = {
-    name: "Tamim",
-    age: 20
-} as const;
-
-userConst.name = "Muhamamd" // Cannot assign to 'name' because it is a read-only property.
-```
-
 # Function: 
 
 ```ts
@@ -537,7 +495,54 @@ function infiniteLoop(): never {
 }
 ```
 
-# Type Alias: 
+# Object: 
+
+```ts
+let person: {
+    name: string;
+    age: number;
+    isAdmin: boolean
+} = {
+    name: "Tamim",
+    age: 20,
+    isAdmin: true
+}
+
+// Optional Properties
+
+let user: {
+    name: string,
+    age?: number
+} = {
+    name: "Tamim"
+}
+
+console.log(person)
+console.log(user)
+
+// Readonly Properties
+let admin: {
+    readonly id: number;
+    name: string;
+} = {
+    id: 1,
+    name: "Tamim"
+};
+
+admin.id = 2; // Cannot assign to 'id' because it is a read-only property.
+
+// as const
+let userConst = {
+    name: "Tamim",
+    age: 20
+} as const;
+
+userConst.name = "Muhamamd" // Cannot assign to 'name' because it is a read-only property.
+```
+
+# Type Alias, Interface and Intersection: 
+
+## Type Alias: 
 A type alias allows you to define a custom type that can be reused throughout your code. We need to use `type` keyword to create an type alias.
 
 ```ts
@@ -594,4 +599,147 @@ type ID = string | number;
 
 const userId1: ID = "abc123";
 const userId2: ID = 101;
+```
+
+## Interface: 
+Defines the shape of an object: 
+
+```ts
+// without interface
+const user1: {
+    name: string;
+    age: number;
+    isAdmin?: boolean
+} = {
+    name: "nasrin",
+    age: 11,
+    isAdmin: false
+}
+
+// with interface
+interface User {
+    name: string;
+    age: number;
+    isAdmin?: boolean; 
+}
+const user2: User = {
+    name: "tamim",
+    age: 20
+}
+
+// with type alias
+type User = {
+    name: string;
+    age: number;
+    isAdmin?: boolean; 
+}
+const user3: User = {
+    name: "tamim",
+    age: 20
+}
+```
+
+```ts
+// with type alias
+type Friends = string[]
+const friends: Friends = ["A", "B", "C"]
+
+// with interface
+interface iFriends {
+    [i: number]: string 
+}
+const friends2: iFriends = ["D", "E", "F"]
+
+interface INumberArray {
+  [index: number]: number;
+}
+
+const nums: INumberArray = [1, 2, 3];
+```
+
+here, 
+- [index: number] --> the key type
+- :number --> the value type
+
+Note: for array interface is little bit comple because interfaces do not have built-in syntax for arrays menas 
+Interfaces describe objects, not arrays.
+
+
+```ts
+// with type alias
+type Add = (num1: number, num2: number) => number
+const add1: Add = (num1, num2) => num1 + num2
+
+// with interface
+interface iAdd {
+    (number1: number, number2: number): number
+}
+const add2: iAdd = (number1, number2) => number1 + number2
+```
+
+Note: interface not suppoer intersection, so for intersection we must use extends keywords.
+
+- extends keywords inherit all properties from another interface. 
+
+```ts
+type User = {
+    name: string;
+    age: number
+}
+
+type Role = {
+    role: 'admin' | 'user'
+}
+
+type UserWithRole = User & Role
+
+const user1: UserWithRole = {
+    name: "x",
+    age: 1,
+    role: 'user'
+}
+
+
+interface User2 {
+    name: string;
+    age: number
+}
+
+
+interface IUserWithRole extends User2 {
+    role: 'admin' | 'user'
+}
+
+const user2: IUserWithRole = {
+    name: "x",
+    age: 1,
+    role: 'user'
+}
+```
+
+**Tips:**
+- Use interface → for object structure and class
+- Use type alias → for everything else
+
+## intersection: 
+Combines multiple type alias. Unlike union here the value must be satisfy all type alias that are combined by intersection.
+
+```ts
+type Name = { name: string }
+type Age = { age: number }
+
+type Person = Name & Age;
+
+const p1: Person = {
+    name: "tamim",
+    age: 20
+}
+
+const p2: Person = {
+    name: "Muhammad",
+}
+/*
+Type '{ name: string; }' is not assignable to type 'Person'.
+  Property 'age' is missing in type '{ name: string; }' but required in type 'Age'.
+*/
 ```
