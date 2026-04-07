@@ -11,34 +11,17 @@
     - [When to use what:](#when-to-use-what)
 - [Number, Boolean, String:](#number-boolean-string)
 - [Any, Unknown, Never, undefined \& null](#any-unknown-never-undefined--null)
-  - [any](#any)
-  - [unknown](#unknown)
-  - [Never:](#never)
-  - [Undefined:](#undefined)
-  - [Null:](#null)
 - [Literal, as const and readonly:](#literal-as-const-and-readonly)
-  - [Literal:](#literal)
-  - [readonly:](#readonly)
-  - [as const:](#as-const)
 - [union:](#union)
 - [enum:](#enum)
 - [Array and Tuple:](#array-and-tuple)
-  - [Array:](#array)
-  - [Tuple:](#tuple)
 - [Function:](#function)
-    - [void:](#void)
-    - [never:](#never-1)
 - [Object:](#object)
 - [Type Alias, Interface and Intersection:](#type-alias-interface-and-intersection)
-  - [Type Alias:](#type-alias)
-  - [Interface:](#interface)
-  - [intersection:](#intersection)
 - [Type Assertion:](#type-assertion)
 - [Generics](#generics)
     - [Constrain](#constrain)
-      - [with keyof:](#with-keyof)
-    - [conditional Types:](#conditional-types)
-    - [Mpped Types:](#mpped-types)
+    - [keyof:](#keyof)
 - [Type Guards](#type-guards)
     - [Typeof:](#typeof)
     - [in Operator:](#in-operator)
@@ -71,19 +54,20 @@ TypeScript is a superset of JavaScript that design to make large-scale applicati
 Note: Superset means a language that includes all features of another language, plus add additional features.
 
 ## TypeScript Main Features: 
-- Static Typing: Allows us to define types.
-- Static Type Checking: TypeScript detects type errors while writing code (during development) and at compile time, before the code runs.
+- Allows us to define types.
+- Detects type errors while writing code (during development at vs code) and at compile time.
 - Code Suggestions & IntelliSense:
 
 ## JavaScript Vs TypeScript
 
-| JavaScript                                                   | TypeScript                                                                               |
-| ------------------------------------------------------------ | ---------------------------------------------------------------------------------------- |
-| A scripted programming language                              | A compiled language that is superset of JS                                               |
-| Runs directly in browsers or Node.js (no compilation needed) | Must be compiled to JavaScript using the TypeScript compiler (tsc)                       |
-| Errors appear only at runtime                                | Errors while writing code (during development) and at compile time, before the code runs |
-| Prototype based OOP                                          | Class-based OOP syntax (compiles to JS prototypes)                                       |
-| Basic editor support, limited IntelliSense.                  | Rich editor support, full IntelliSense with type information                             |
+| JavaScript                                                   | TypeScript                                                                           |
+| ------------------------------------------------------------ | ------------------------------------------------------------------------------------ |
+| A scripted programming language                              | A compiled language that is superset of JS                                           |
+| Runs directly in browsers or Node.js (no compilation needed) | Must be compiled to JavaScript using the TypeScript compiler (tsc)                   |
+| Errors appear only at runtime                                | Errors appear while writing code (during development at vs code) and at compile time |
+| Basic editor support, limited IntelliSense.                  | Rich editor support, full IntelliSense with type information                         |
+
+Note: Runtime means when the code is actually executing in the browser or Node.js. Errors that occur at this stage are called runtime errors. If they are not handled properly, they can crash the application,
 
 ## How to run TypeScript:
 
@@ -137,9 +121,8 @@ We might wondered that how node understand ts code?
 Starting from Node.js v22.6.0, Node introduced Type Stripping. Type Stripping means:
 - Node removes typeScript from the file
 - Then executes the remaining JavaScript
-So Node is NOT running TypeScript directly. It removes the types first, then runs JavaScript behind the scenes.
 
-Note: Still Node.js won't fully support TS, It only can remove basic type annotations. So when we do `node index.ts` advance TS features like enum, namespace etc  might not works. For that case we need to manually compiled the ts code by using TypeScript Compiler `tsc` so se the output of our code in raw js. 
+So Node is NOT running TypeScript directly. It removes the types first, then runs JavaScript behind the scenes. But remember It only can remove basic type annotations. So advance TS features like enum, namespace etc  might not works. For that case we need to manually compiled the ts code by using TypeScript Compiler `tsc` so se the output of our code in raw js. 
 
   - Option 2: Using TypeScript Compiler (TSC)
 Compile the file manually using TypeScript Compiler:
@@ -182,7 +165,7 @@ TypeScript → JavaScript → Node execution
 ```
 
 ## Inference vs Explicit Typing (Type Annotation): 
-In TypeScript there are two main ways types are handled: 
+In TypeScript there are two main ways to handle types: 
 
 ### 1. Inference:
 
@@ -238,8 +221,8 @@ let greeting: string = `Hello, ${username}!`;
 
 # Any, Unknown, Never, undefined & null
 
-## any
-any disables TypeScript’s type checking for that specific variable. It allows us to assign any value and perform any operation without compile-time errors.
+- any
+any disables TypeScript’s type checking for that specific variable. It allows us to assign any value and perform any operation without development (vs code level) and compile-time errors.
 
 ```ts
 let something: any;
@@ -256,9 +239,9 @@ Since, any bypasses type safety, TypeScript will not prevent invalid operations:
 something.nonExistentMethod(); // No error at compile time (unsafe)
 ```
 
-Note: It is strongly recommended to avoid any in production code because it removes all static type guarantees and can introduce hidden runtime bugs.
+Note: It is strongly recommended to avoid any in production code because it removes all type checking by ts and can introduce hidden runtime bugs.
 
-## unknown
+- unknown
 unknown is similar to any, but type-safe. We can assign any value to an unknown variable, but cannot perform operations on it until narrow its type using type guards such as typeof, instanceof, Array.isArray(), or custom type guards.
 
 ```ts
@@ -280,7 +263,7 @@ console.log(typeof value === "number" && value.toFixed(2)); // 10.23
 
 Note: A type guard is a runtime check that narrows a variable’s type within a specific scope so TypeScript can safely infer a more specific type.
 
-## Never: 
+- Never: 
 never represents a value that can never exist. It is used for functions that never return or for logically unreachable code paths.
 
 ```ts
@@ -295,7 +278,7 @@ function infiniteLoop(): never {
 }
 ```
 
-## Undefined: 
+- Undefined: 
 undefined means a variable has been declared but not assigned a value.
 
 ```ts
@@ -305,7 +288,7 @@ console.log(notAssigned); // undefined
 
 Note: In JavaScript, variables are undefined by default if not initialized. In TypeScript, you must explicitly include undefined in the type if a value may be missing.
 
-## Null: 
+- Null: 
 null represents an intentional absence of a value. It is typically used when you explicitly want to indicate that something is empty or not set.
 
 ```ts
@@ -317,7 +300,7 @@ selectedUser = null;
 
 #  Literal, as const and readonly:
 
-## Literal: 
+- Literal: 
 Represents an exact value that a variable can hold. Means it's not represent a data type as a type, its represents an exact value as a type.
 
 ```ts
@@ -338,7 +321,7 @@ move = 'right';
 // move = 'up';  // Type '"up"' is not assignable to type '"left" | "right"'.
 ```
 
-## readonly:
+- readonly:
 readonly prevents a object property or array element being reassigned after initialization.  
 
 Note; unlike literal, its represent a data types as a type. so it just prevent us to modify a value after initialization.
@@ -365,7 +348,7 @@ const numbers: readonly number[] = [1, 2, 3];
 Note: readonly is a shallow restriction. It does NOT deeply freeze nested objects or arrays.
 
 
-## as const:
+- as const:
 Automatically converts a value to its most specific literal type and makes it deeply readonly. so, its combine literal type and readonly at a time. Means it represents a value as a type (literal) +  prevent us to modify a value after initialization (readonly).
 
 
@@ -449,9 +432,11 @@ let move: Direction = Direction.Left;
 console.log(move) // left
 ```
 
+Note: Developer usually prefer literal unions instead of enums.
+
 # Array and Tuple: 
 
-## Array: 
+- Array: 
 
 ```ts
 let numbers: number[] = [1, 2, 3]
@@ -460,18 +445,15 @@ let characters: string[] = ['a', 'b']
 let mix: (string | number)[] = [1, "Hello", 2, 4, 'hi'] // union array
 ```
 
-## Tuple:
+- Tuple:
 Tuples are fixed-length arrays with fixed types for each element.
 
 ```ts
-let user1: [string, number] = ['tamim', 20]
-let user2: [number, number] = [20, 20]
+const user1: [string, number] = ['tamim', 20]
+const user2: [number, number] = [20, 20]
 
 // tuple with optional element
-let user3: [string, number?];
-
-user3 = ["Tamim"];      
-user3 = ["Tamim", 20];  
+const user3: [string, number?] = ["tamim"]
 ```
 
 # Function: 
@@ -486,7 +468,7 @@ let greet1 = (name: string): string => {
 }
 ```
 
-### void:
+- void:
 void is used for functions that do not return anything. You can’t return any value (except undefined optionally).
 
 ```ts
@@ -507,7 +489,7 @@ function optionalReturn(): void {
 console.log(optionalReturn())
 ```
 
-### never: 
+- never: 
 never represents a value that can never exist. It is used for functions that never return or for logically unreachable code paths.
 
 ```ts
@@ -567,7 +549,7 @@ userConst.name = "Muhamamd" // Cannot assign to 'name' because it is a read-only
 
 # Type Alias, Interface and Intersection: 
 
-## Type Alias: 
+- Type Alias: 
 A type alias allows you to define a custom type that can be reused throughout your code. We need to use `type` keyword to create an type alias.
 
 ```ts
@@ -626,8 +608,13 @@ const userId1: ID = "abc123";
 const userId2: ID = 101;
 ```
 
-## Interface: 
+- Interface: 
 Defines the shape of an object: 
+
+Note: 
+- Use interface → for object structure and class only
+- Use type alias → for everything else or developer often used type alias also objects
+
 
 ```ts
 // without interface
@@ -664,90 +651,8 @@ const user3: User = {
 }
 ```
 
-```ts
-// with type alias
-type Friends = string[]
-const friends: Friends = ["A", "B", "C"]
-
-// with interface
-interface iFriends {
-    [i: number]: string 
-}
-const friends2: iFriends = ["D", "E", "F"]
-
-interface INumberArray {
-  [index: number]: number;
-}
-
-const nums: INumberArray = [1, 2, 3];
-```
-
-here, 
-- [index: number] --> the key type
-- :number --> the value type
-
-Note: for array interface is little bit comple because interfaces do not have built-in syntax for arrays menas 
-Interfaces describe objects, not arrays.
-
-
-```ts
-// with type alias
-type Add = (num1: number, num2: number) => number
-const add1: Add = (num1, num2) => num1 + num2
-
-// with interface
-interface iAdd {
-    (number1: number, number2: number): number
-}
-const add2: iAdd = (number1, number2) => number1 + number2
-```
-
-Note: interface not suppoer intersection, so for intersection we must use extends keywords.
-
-- extends keywords inherit all properties from another interface. 
-
-```ts
-type User = {
-    name: string;
-    age: number
-}
-
-type Role = {
-    role: 'admin' | 'user'
-}
-
-type UserWithRole = User & Role
-
-const user1: UserWithRole = {
-    name: "x",
-    age: 1,
-    role: 'user'
-}
-
-
-interface User2 {
-    name: string;
-    age: number
-}
-
-
-interface IUserWithRole extends User2 {
-    role: 'admin' | 'user'
-}
-
-const user2: IUserWithRole = {
-    name: "x",
-    age: 1,
-    role: 'user'
-}
-```
-
-**Tips:**
-- Use interface → for object structure and class
-- Use type alias → for everything else
-
-## intersection: 
-Combines multiple type alias. Unlike union here the value must be satisfy all type alias that are combined by intersection.
+- intersection: 
+Combines multiple type alias. Unlike union here the value must be satisfy all type alias that are combined by intersection. It is written using the and (&) symbol.
 
 ```ts
 type Name = { name: string }
@@ -797,9 +702,7 @@ data.age = 20;
 ```
 
 # Generics
-Generics allow you to write reusable code that works with multiple types while keeping strong type safety.
-
-Instead of using any, which removes type checking, generics let you pass types as parameters.
+Generics allow us to write reusable code that works with multiple types while keeping strong type safety. Instead of using any, which removes type checking, generics let us pass types by argument.
 
 ```ts
 // with any
@@ -807,8 +710,8 @@ function getFirstElement(arr: any[]) {
     return arr[0];
 }
 
-const num = getFirstElement([1, 2, 3]);   // Type is any
-const str = getFirstElement(["a", "b"]);  // Type is any
+const num = getFirstElement([1, 2, 3]);   // function getFirstElement(arr: any[]): any
+const str = getFirstElement(["a", "b"]);  // function getFirstElement(arr: any[]): any
 
 console.log(num, str) // 1 a
 
@@ -818,19 +721,10 @@ function getFirstElement2<T>(arr: T[]): T {
     return arr[0];
 }
 
-const num2 = getFirstElement([1, 2, 3]);   // Type is number
-const str2 = getFirstElement(["a", "b"]);  // Type is string
+const num2 = getFirstElement2<number>([1, 2, 3]);   // function getFirstElement2<number>(arr: number[]): number
+const str2 = getFirstElement2(["a", "b"]);  // function getFirstElement2<string>(arr: string[]): string
 
 console.log(num2, str2) // 1 a
-```
-
-```ts
-function merge<T, U>(obj1: T, obj2: U): T & U {
-    return { ...obj1, ...obj2 };
-}
-
-const result = merge({ name: "Tamim" }, { age: 20 });
-console.log(result) // { name: 'Tamim', age: 20 }
 ```
 
 ```ts
@@ -856,24 +750,24 @@ const coordinates1: Coordinates<number, number> = [20, 30]
 const coordinates2: Coordinates<string, string> = ['20', '30']
 
 console.log(coordinates1) // [20, 30]
-```
 
-```ts
+
+// -----------------
+
 type GenericArray<T> = Array<T>
+// type GenericArray<T> = T[]
 
-
-// const strArray: string[] = ['a', 'b', 'c']
 const strArray: GenericArray<string> = ['a', 'b', 'c']
 
-// const numArray: number[] = [1, 2, 3]
-const numArray: GenericArray<number> = [1, 2, 3]
+const numArray: GenericArray<number> = [1, 2, 3] // 
 
-// const boolArray: boolean[] = [true, false, true]
 const boolArray: GenericArray<boolean> = [true, false, true]
 ```
-Note:  Array[T] === T[]
+
 
 ```ts
+// Generic with array of objects
+
 // type GenericArray<T> = Array<T>
 
 // const userList: GenericArray<{ name: string, age: number }> = [
@@ -915,103 +809,6 @@ const userList: GenericArray<User> = [
 ]
 ```
 
-```ts
-interface Developer<T, X = null> { // X = null (Default value)
-    name: string;
-    salary: number;
-    device: {
-        brand: string;
-        model: string;
-        releasedYear: string
-    };
-    smartWatch: T;
-    bike?: X
-}
-
-interface PoorWatch {
-    heartRate: string;
-    stopWatch: boolean
-}
-
-const poorDeveloper: Developer<PoorWatch> = {
-    name: 'x',
-    salary: 20,
-    device: {
-        brand: 'oppo',
-        model: "a5s",
-        releasedYear: '2005'
-    },
-    smartWatch: {
-        heartRate: '56',
-        stopWatch: true
-    },
-    bike: null
-}
-
-const richDeveloper: Developer<{
-    heartRate: string;
-    stopWatch: boolean;
-    calling: boolean;
-    ai: boolean
-}, { brand: "yamaha" }> = {
-    name: 'x',
-    salary: 20,
-    device: {
-        brand: 'oppo',
-        model: "a5s",
-        releasedYear: '2005'
-    },
-    smartWatch: {
-        heartRate: '56',
-        stopWatch: true,
-        calling: true,
-        ai: true
-    }
-}
-```
-
-```ts
-// const createArrayWithString = (value: string) => [value]
-// const createArrayWithNumber = (value: number) => [value]
-// const createArrayWithUserObj = (value: { id: number, name: string }) => [value]
-
-// const arrString = createArrayWithString('Apple')
-// const arrNumber = createArrayWithNumber(10)
-// const arrObj = createArrayWithUserObj({ id: 3, name: "x" })
-
-const createArrayWithGeneric = <T>(value: T) => [value]
-
-const arrString = createArrayWithGeneric('Apple')
-const arrNumber = createArrayWithGeneric(10)
-const arrObj = createArrayWithGeneric({ id: 3, name: "x" })
-
-
-const createArrayWithTuple = (param1: string, param2: string) => [param1, param2]
-
-const createArrayTupleWithGeneric = <X, Y>(param1: X, param2: Y) => [param1, param2]
-const res1 = createArrayTupleWithGeneric("tamim", false)
-const res2 = createArrayTupleWithGeneric(222, { name: "tamim" })
-
-
-const addStudentToCourse = <T>(studentInfo: T) => {
-    return { course: "Next Level", ...studentInfo }
-};
-
-const student1 = {
-    id: 123,
-    name: "tamim",
-    hasPen: true
-}
-
-const student2 = {
-    id: 32434,
-    name: "zunker",
-    hasCar: true,
-    isMarried: true
-}
-
-const result = addStudentToCourse(student1)
-```
 
 ### Constrain
 Generic constraints allow you to restrict what types are allowed in a generic. we do this using extends keyword.
@@ -1035,15 +832,6 @@ toArray(20)
 toArray(true) //  Argument of type 'boolean' is not assignable to parameter of type 'string | number'.
 ```
 
-```ts
-function getFirst<T extends any[]>(arr: T) {
-    return arr[0]
-}
-
-getFirst([1, 2, 3])
-getFirst(['1', '2'])
-getFirst("Hello") // Argument of type 'string' is not assignable to parameter of type 'any[]'.
-```
 
 ```ts
 interface Person {
@@ -1085,7 +873,7 @@ const result1 = addStudentToCourse(student1)
 const result2 = addStudentToCourse(student2) // error
 ```
 
-#### with keyof: 
+### keyof: 
 keyof is an operator that extracts all keys of a type as a union of string literal types.
 
 ```ts
@@ -1105,122 +893,39 @@ getProperty(user, "location");  // Argument of type '"location"' is not assignab
 
 ```ts
 type User = {
-    id: number,
-    name: string,
-    address: {
-        city: string
-    }
-}
+    id: number;
+    name: string;
+};
 
 const user: User = {
-    id: 222,
-    name: "mezba",
-    address: {
-        city: "Barisal"
-    }
-}
-
-// const myId = user["id"]
-// const myName = user["name"]
-// const address = user["address"]
-// console.log(myId, myName, address) // 222 mezba { city: 'Barisal' }
-
-const getPropertyFromObj = <X,>(obj: X, key: keyof X) => {
-    return obj[key]
-}
-
-const result = getPropertyFromObj(user, "name")
-console.log(result) // mezba
-
-const product = {
-    brand: "apple"
-}
-const student = {
-    id: 123,
-    class: 5
-}
-
-const result2 = getPropertyFromObj(product, "brand")
-const result3 = getPropertyFromObj(student, "id")
-
-console.log(result2, result3) // apple 123
-```
-### conditional Types:
-
-Conditional types allow you to choose a type based on a condition, similar to an if/else, but inside the type system.
-
-syntax: 
-
-```
-T extends U ? X : Y
-```
-- If T extends (matches) U, return X else Y
-
-```ts
-type A = null;
-type B = undefined
-
-type c = A extends number ? true : B extends undefined ? true : false
-```
-```ts
-type RichPeopleVehicle = {
-    bike: string;
-    car: string;
-    ship: string;
-}
-
-type CheckVehicle<T> = T extends keyof RichPeopleVehicle ? true : false
-
-type HasBike = CheckVehicle<"bike">
-```
-
-```ts
-type IsNumber<T> = T extends number ? "YES" : "NO";
-
-type A = IsNumber<number>;   // "YES"
-type B = IsNumber<string>;   // "NO"
-```
-
-### Mpped Types:
-
-Mapped types allow you to create new types by transforming existing types. 
-
-```ts
-type Person = {
-  name: string;
-  age: number;
+    id: 1,
+    name: "Tamim",
 };
 
-// Make all properties optional
-type PartialPerson = {
-  [K in keyof Person]?: Person[K];
+const getProperty = <T, K extends keyof T>(obj: T, key: K): T[K] => {
+    return obj[key];
 };
+
+console.log(getProperty(user, "name")) // Tamim
+console.log(getProperty(user, "id")) // 1
+console.log(getProperty(user, "kfjdjfdi")) // Argument of type '"kfjdjfdi"' is not assignable to parameter of type 'keyof User'.
 ```
-here, 
-- [K in keyof Person] → iterate over all keys of Person.
-- Person[K] → type of that property.
-- ? → make it optional.
 
-```ts
-type AreaOfNum = {
-    height: number;
-    width: number;
-}
+here: 
+- T → represents the type of the object passed to the function (in this case, User)
+- K extends keyof T → K is restricted to only the valid keys of T
+- keyof T → produces a union of keys → "id" | "name"
+- obj[key] → safely accesses the property, guaranteed to exist on T
+- T[K] → returns the exact type of that property
 
-// type AreaOfString = {
-//     height: string;
-//     width: string;
-// }
-
-type Area<T> = {
-    [key in keyof T]: T[key]
-}
-
-const area1: Area<{ height: string; width: number }> = {
-    height: '50',
-    width: 40
-}
+```js
+getProperty(user, "name")
 ```
+- T = User
+- keyof T = "id" | "name"
+- K = "name"
+- T[K] = User["name"] = string
+- So return type = string
 
 # Type Guards
 Type guards help TypeScript narrow a variable’s type at runtime.
