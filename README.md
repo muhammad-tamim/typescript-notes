@@ -1,48 +1,48 @@
 <h1 align="center">TypeScript Notes</h1>
 
-- [Setup:](#setup)
-- [TypeScript Introduction:](#typescript-introduction)
-  - [What is TypeScript:](#what-is-typescript)
-  - [TypeScript Main Features:](#typescript-main-features)
-  - [JavaScript Vs TypeScript](#javascript-vs-typescript)
-  - [Inference vs Explicit Typing (Type Annotation):](#inference-vs-explicit-typing-type-annotation)
-    - [1. Inference:](#1-inference)
-    - [2. Explicit Typing (Type Annotation):](#2-explicit-typing-type-annotation)
-    - [When to use what:](#when-to-use-what)
-- [Number, Boolean, String:](#number-boolean-string)
-- [Any, Unknown, Never, undefined \& null](#any-unknown-never-undefined--null)
-- [Literal, as const and readonly:](#literal-as-const-and-readonly)
-- [union:](#union)
-- [enum:](#enum)
-- [Array and Tuple:](#array-and-tuple)
-- [Function:](#function)
-- [Object:](#object)
-- [Type Alias, Interface and Intersection:](#type-alias-interface-and-intersection)
-- [Type Assertion:](#type-assertion)
-- [Generics](#generics)
-    - [Constrain](#constrain)
-    - [keyof:](#keyof)
-- [Type Guards](#type-guards)
-    - [Typeof:](#typeof)
-    - [in Operator:](#in-operator)
-    - [Instanceof:](#instanceof)
-    - [Equality Narrowing:](#equality-narrowing)
-    - [Truthiness Narrowing:](#truthiness-narrowing)
-    - [Array.isArray():](#arrayisarray)
-- [Utility Types:](#utility-types)
-- [OOP:](#oop)
-    - [Classes:](#classes)
-    - [Static Keyword:](#static-keyword)
-    - [The Four Pillars of OOP:](#the-four-pillars-of-oop)
-      - [Encapsulation:](#encapsulation)
-      - [Abstraction:](#abstraction)
-        - [Difference Between Encapsulation and Abstraction:](#difference-between-encapsulation-and-abstraction)
-      - [Inheritance:](#inheritance)
-      - [Polymorphism:](#polymorphism)
-        - [Using Methods Overriding:](#using-methods-overriding)
-        - [Using Duck Typing:](#using-duck-typing)
+- [1. Setup:](#1-setup)
+- [2. TypeScript Introduction:](#2-typescript-introduction)
+  - [2.1. What is TypeScript:](#21-what-is-typescript)
+  - [2.2. TypeScript Main Features:](#22-typescript-main-features)
+  - [2.3. JavaScript Vs TypeScript](#23-javascript-vs-typescript)
+  - [2.4. Inference vs Explicit Typing (Type Annotation):](#24-inference-vs-explicit-typing-type-annotation)
+    - [2.4.1. Inference:](#241-inference)
+    - [2.4.2. Explicit Typing (Type Annotation):](#242-explicit-typing-type-annotation)
+    - [2.4.3. When to use what:](#243-when-to-use-what)
+- [3. Number, Boolean, String:](#3-number-boolean-string)
+- [4. Any, Unknown, Never, undefined \& null](#4-any-unknown-never-undefined--null)
+- [5. Literal, as const and readonly:](#5-literal-as-const-and-readonly)
+- [6. union:](#6-union)
+- [7. enum:](#7-enum)
+- [8. Array and Tuple:](#8-array-and-tuple)
+- [9. Function:](#9-function)
+- [10. Object:](#10-object)
+- [11. Type Alias, Interface and Intersection:](#11-type-alias-interface-and-intersection)
+- [12. Type Assertion:](#12-type-assertion)
+- [13. Generics](#13-generics)
+    - [13.0.1. Constrain](#1301-constrain)
+    - [13.0.2. keyof:](#1302-keyof)
+- [14. Type Guards](#14-type-guards)
+    - [14.0.1. Typeof:](#1401-typeof)
+    - [14.0.2. in Operator:](#1402-in-operator)
+    - [14.0.3. Instanceof:](#1403-instanceof)
+    - [14.0.4. Equality Narrowing:](#1404-equality-narrowing)
+    - [14.0.5. Truthiness Narrowing:](#1405-truthiness-narrowing)
+    - [14.0.6. Array.isArray():](#1406-arrayisarray)
+- [15. Utility Types:](#15-utility-types)
+- [16. OOP:](#16-oop)
+    - [16.0.1. Classes:](#1601-classes)
+    - [16.0.2. Static Keyword:](#1602-static-keyword)
+    - [16.0.3. The Four Pillars of OOP:](#1603-the-four-pillars-of-oop)
+      - [16.0.3.1. Encapsulation:](#16031-encapsulation)
+      - [16.0.3.2. Abstraction:](#16032-abstraction)
+        - [16.0.3.2.1. Difference Between Encapsulation and Abstraction:](#160321-difference-between-encapsulation-and-abstraction)
+      - [16.0.3.3. Inheritance:](#16033-inheritance)
+      - [16.0.3.4. Polymorphism:](#16034-polymorphism)
+        - [16.0.3.4.1. Using Methods Overriding:](#160341-using-methods-overriding)
+        - [16.0.3.4.2. Using Duck Typing:](#160342-using-duck-typing)
 
-# Setup:
+# 1. Setup:
 
 - Step 1: Install Node.js:
  ![alt text](./assets/images/typeScript-introduction/install-node.png)
@@ -139,22 +139,23 @@ This compiles the TypeScript in memory and runs the output instantly. Basically 
 TypeScript → JavaScript → Node execution
 ```
 
-# TypeScript Introduction:
+# 2. TypeScript Introduction:
 
-## What is TypeScript:
+## 2.1. What is TypeScript:
 
 TypeScript is a superset of JavaScript that design to make large-scale application development safer, more predictable, and easier to maintain. It is a compiled language, meaning TypeScript code first converted into JavaScript before execution.
 
-![image](./assets/images/typeScript-introduction/hello-world.webp)
-
 Note: Superset means a language that includes all features of another language, plus add additional features.
 
-## TypeScript Main Features: 
+![image](./assets/images/typeScript-introduction/hello-world.webp)
+
+
+## 2.2. TypeScript Main Features: 
 - Allows us to define types.
 - Detects type errors while writing code (during development at vs code) and at compile time.
 - Code Suggestions & IntelliSense:
 
-## JavaScript Vs TypeScript
+## 2.3. JavaScript Vs TypeScript
 
 | JavaScript                                                   | TypeScript                                                                           |
 | ------------------------------------------------------------ | ------------------------------------------------------------------------------------ |
@@ -165,10 +166,10 @@ Note: Superset means a language that includes all features of another language, 
 
 Note: Runtime means when the code is actually executing in the browser or Node.js. Errors that occur at this stage are called runtime errors. If they are not handled properly, they can crash the application,
 
-## Inference vs Explicit Typing (Type Annotation): 
+## 2.4. Inference vs Explicit Typing (Type Annotation): 
 In TypeScript there are two main ways to handle types: 
 
-### 1. Inference:
+### 2.4.1. Inference:
 
 Type inference is when TypeScript guess and assigns a type automatically based on the value or context.
 
@@ -192,9 +193,9 @@ const user = {
 ```ts
 const id = 2; // const id: 2
 ```
-here, id types is set to 2, Because const data types are immutable.
+Note: here, id types is set to 2, Because const data types are immutable.
 
-### 2. Explicit Typing (Type Annotation): 
+### 2.4.2. Explicit Typing (Type Annotation): 
 Explicit typing is when we assigns the type ourself. Means here, we manually define the type.
 
 ```ts
@@ -203,11 +204,11 @@ let name: string = "Tamim";
 let isAdmin: boolean = false;
 ```
 
-### When to use what: 
+### 2.4.3. When to use what: 
 - Use inference for small, local variables.
 - Use explicit typing for important or shared code.
 
-# Number, Boolean, String:
+# 3. Number, Boolean, String:
 
 ```ts
 let age: number = 25;
@@ -220,7 +221,7 @@ let username: string = "Tamim";
 let greeting: string = `Hello, ${username}!`;
 ```
 
-# Any, Unknown, Never, undefined & null
+# 4. Any, Unknown, Never, undefined & null
 
 - any
 any disables TypeScript’s type checking for that specific variable. It allows us to assign any value and perform any operation without development (vs code level) and compile-time errors.
@@ -299,7 +300,7 @@ selectedUser = "Tamim";
 selectedUser = null;
 ```
 
-#  Literal, as const and readonly:
+#  5. Literal, as const and readonly:
 
 - Literal: 
 Represents an exact value that a variable can hold. Means it's not represent a data type as a type, its represents an exact value as a type.
@@ -376,7 +377,7 @@ const person: {
 // person.name = "Alex"; // Cannot assign to 'name' because it is a read-only property.
 ```
 
-# union: 
+# 6. union: 
 Combine multiple literal types or general types into one variable. It is written using the pipe (|) symbol.
 
 - literal union: 
@@ -405,7 +406,7 @@ id = 'id123'
 // id = true // Type 'boolean' is not assignable to type 'string | number'.
 ```
 
-# enum: 
+# 7. enum: 
 Enum is a collection of named constants grouped under a single type, which can have numeric (default) or string values.
 
 ```ts
@@ -435,7 +436,7 @@ console.log(move) // left
 
 Note: Developer usually prefer literal unions instead of enums.
 
-# Array and Tuple: 
+# 8. Array and Tuple: 
 
 - Array: 
 
@@ -457,7 +458,7 @@ const user2: [number, number] = [20, 20]
 const user3: [string, number?] = ["tamim"]
 ```
 
-# Function: 
+# 9. Function: 
 
 ```ts
 function add(a: number, b: number): number {
@@ -503,7 +504,7 @@ function infiniteLoop(): never {
 }
 ```
 
-# Object: 
+# 10. Object: 
 
 ```ts
 let person: {
@@ -548,7 +549,7 @@ let userConst = {
 userConst.name = "Muhamamd" // Cannot assign to 'name' because it is a read-only property.
 ```
 
-# Type Alias, Interface and Intersection: 
+# 11. Type Alias, Interface and Intersection: 
 
 - Type Alias: 
 A type alias allows you to define a custom type that can be reused throughout your code. We need to use `type` keyword to create an type alias.
@@ -675,7 +676,7 @@ Type '{ name: string; }' is not assignable to type 'Person'.
 */
 ```
 
-# Type Assertion: 
+# 12. Type Assertion: 
 Sometimes TypeScript doesn’t know the exact type and cannot infers type correctly. Type assertion lets you override TypeScript's type and force a value to be treated as a specific type. 
 
 we used type assertion: 
@@ -702,7 +703,7 @@ data.name = "Tamim";
 data.age = 20;
 ```
 
-# Generics
+# 13. Generics
 Generics allow us to write reusable code that works with multiple types while keeping strong type safety. Instead of using any, which removes type checking, generics let us pass types by argument.
 
 ```ts
@@ -811,7 +812,7 @@ const userList: GenericArray<User> = [
 ```
 
 
-### Constrain
+### 13.0.1. Constrain
 Generic constraints allow you to restrict what types are allowed in a generic. we do this using extends keyword.
 
 ```ts
@@ -874,7 +875,7 @@ const result1 = addStudentToCourse(student1)
 const result2 = addStudentToCourse(student2) // error
 ```
 
-### keyof: 
+### 13.0.2. keyof: 
 keyof is an operator that extracts all keys of a type as a union of string literal types.
 
 ```ts
@@ -928,12 +929,12 @@ getProperty(user, "name")
 - T[K] = User["name"] = string
 - So return type = string
 
-# Type Guards
+# 14. Type Guards
 Type guards help TypeScript narrow a variable’s type at runtime.
 
 When a variable can have multiple possible types (union type), TypeScript needs extra information to know what operations are safe. A type guard tells TypeScript At this point, the value is this type.
 
-### Typeof:
+### 14.0.1. Typeof:
 
 ```ts
 function printValue(v: string | number) {
@@ -967,7 +968,7 @@ const result2 = add("2", 2)
 console.log(result1, result2) // 4 22
 ```
 
-### in Operator:
+### 14.0.2. in Operator:
 Checks if a property exists in the object:
 
 ```ts
@@ -984,7 +985,7 @@ function checkRole(person: Admin | User) {
 
 checkRole({ username: "Tamim", isAdmin: true }) // Admin user
 ```
-### Instanceof:
+### 14.0.3. Instanceof:
 
 the instanceof operator is used to check whether an object is an instance of a specific class or not.
 
@@ -1076,7 +1077,7 @@ getUserInfo(student1) // he study 10 daily
 getUserInfo(Teacher1) // i take 5 of class
 ```
   
-### Equality Narrowing:
+### 14.0.4. Equality Narrowing:
 
 Using ===, !== to narrow types.
 
@@ -1093,7 +1094,7 @@ function compare(a: string | number, b: string | number) {
 compare('2', 2) // Different values
 ```
 
-### Truthiness Narrowing:
+### 14.0.5. Truthiness Narrowing:
 TypeScript narrows based on truthy/falsy values.
 
 ```ts
@@ -1107,7 +1108,7 @@ function print(msg?: string) {
 }
 print() // Please write something
 ```
-### Array.isArray():
+### 14.0.6. Array.isArray():
 
 ```ts
 function process(x: string | string[]) {
@@ -1123,7 +1124,7 @@ process(['a', 'b']) // Array
   
 
 
-# Utility Types: 
+# 15. Utility Types: 
 TypeScript provides several built-in utility types that help you transform existing types and create new types from them.
 
 Utility types are extremely important because they save you time, reduce code duplication, and let you write cleaner, more flexible TypeScript.
@@ -1267,9 +1268,9 @@ numbers.push(4); // ❌ Error
 numbers[0] = 10; // ❌ Error
 ```
 
-# OOP:
+# 16. OOP:
 
-### Classes: 
+### 16.0.1. Classes: 
 
 ```ts
 class Person {
@@ -1310,7 +1311,7 @@ const p1 = new Person("tamim", 20)
 console.log(p1.greet()); // hello, I'm tamim
 ```
 
-### Static Keyword:
+### 16.0.2. Static Keyword:
 
 ```ts
 class MathUtils {
@@ -1376,10 +1377,10 @@ console.log(Counter.increment()) // 3
 console.log(Counter.increment()) // 4
 console.log(Counter.increment()) // 5
 ```
-### The Four Pillars of OOP:
+### 16.0.3. The Four Pillars of OOP:
 
 
-#### Encapsulation: 
+#### 16.0.3.1. Encapsulation: 
 
 Encapsulation (in js) is the process of hiding the internal state (properties) of an object using private fields (#), and providing controlled access through methods or getters/setters. This protects the object’s data and prevents unintended modifications.
 
@@ -1523,7 +1524,7 @@ console.log(acc.balance); // ✔ 700
 // acc._balance = 5000;   // ❌ ERROR (private)
 ```
 
-#### Abstraction: 
+#### 16.0.3.2. Abstraction: 
 Abstraction is the process of hiding implementation details using private field and showing only the necessary functionality to the user.
 
 ```ts
@@ -1628,7 +1629,7 @@ c.start(); // ✔
 c.stop();  // ✔
 ```
 
-##### Difference Between Encapsulation and Abstraction: 
+##### 16.0.3.2.1. Difference Between Encapsulation and Abstraction: 
 
 | Encapsulation                     | Abstraction                                    |
 | --------------------------------- | ---------------------------------------------- |
@@ -1636,7 +1637,7 @@ c.stop();  // ✔
 | getters/setters or public methods | Public methods                                 |
 
 
-#### Inheritance: 
+#### 16.0.3.3. Inheritance: 
 
 Inheritance is a process that allows a chaild class inherits properties and methods from a parent class using extends keyword and super() method.
 
@@ -1717,14 +1718,14 @@ const teacher1 = new Teacher("y", 20, "dhaka", "Senior Teacher")
 teacher1.takeClass(4)
 ```
 
-#### Polymorphism: 
+#### 16.0.3.4. Polymorphism: 
 Polymorphism is the process that allows a child class to inherit methods from a parent class using the extends keyword, and lets the same method behave differently depending on the child class.
 
 We can do Polymorphism using two ways: 
 1. Methods Overriding: Child class changes parent method behavior.
 2. Duck Typing(Interfae-Based): Different objects implement the same method name.
 
-##### Using Methods Overriding: 
+##### 16.0.3.4.1. Using Methods Overriding: 
 Child class changes parent method behavior.
 
 ```js
@@ -1754,7 +1755,7 @@ cat.makeSound(); // Cat meows
 ```
 Here, makeSound() is overridden in each child class. Same method name behaves differently.
 
-##### Using Duck Typing:
+##### 16.0.3.4.2. Using Duck Typing:
 Different objects implement the same method name, allowing them to be used interchangeably.
 
 ```js
