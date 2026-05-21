@@ -1,10 +1,10 @@
 <h1 align="center">TypeScript Notes</h1>
 
+- [Setup:](#setup)
 - [TypeScript Introduction:](#typescript-introduction)
   - [What is TypeScript:](#what-is-typescript)
   - [TypeScript Main Features:](#typescript-main-features)
   - [JavaScript Vs TypeScript](#javascript-vs-typescript)
-  - [How to run TypeScript:](#how-to-run-typescript)
   - [Inference vs Explicit Typing (Type Annotation):](#inference-vs-explicit-typing-type-annotation)
     - [1. Inference:](#1-inference)
     - [2. Explicit Typing (Type Annotation):](#2-explicit-typing-type-annotation)
@@ -42,6 +42,102 @@
         - [Using Methods Overriding:](#using-methods-overriding)
         - [Using Duck Typing:](#using-duck-typing)
 
+# Setup:
+
+- Step 1: Install Node.js:
+ ![alt text](./assets/images/typeScript-introduction/install-node.png)
+
+- Step 2: Install TypeScript:
+
+  - Option 1: Global install (Good for learning raw TS)
+
+```bash
+npm install -g typescript
+```
+
+By using the -g flag, we install TypeScript globally on our computer. But when we build real projects, we should install TypeScript as a dev dependency, so it only works inside that project.
+
+  - Option 2: Project-based install (Recommended for real projects)
+
+```bash
+npm install -D typescript
+```
+Now TypeScript is installed only inside that project.
+
+
+- step 3: First program: 
+
+```ts
+// index.ts
+const str: string = 'Hello World'
+console.log(str)
+```
+
+- step 4: How to See Output:
+
+  - Option 1: Using Node.js directly (Node 22.6.0+)
+
+```bash
+node index.ts
+```
+
+Output: 
+```
+Hello World
+```
+
+We might wondered that how node understand ts code? 
+
+Starting from Node.js v22.6.0, Node introduced Type Stripping. Type Stripping means:
+- Node removes typeScript from the file
+- Then executes the remaining JavaScript
+
+So Node is NOT running TypeScript directly. It removes the types first, then runs JavaScript behind the scenes. But remember It only can remove basic type annotations. So advance TS features like enum, namespace etc  might not works. For that case we need to manually compiled the ts code by using TypeScript Compiler `tsc` to convert ts to js. 
+
+  - Option 2: Using TypeScript Compiler (TSC)
+Compile the file manually using TypeScript Compiler:
+
+```bash
+// if we used npm install -g typescript
+tsc index.ts
+```
+
+```bash
+// if we used npm install -D typescript
+npx tsc index.ts
+```
+Now we can see a new index.js file create, se basically TSC convert you index.ts to index.js:
+
+```js
+// index.js
+var str = 'Hello World';
+console.log(str);
+```
+so, now our code runner extension on vs code works, or we can see output manually by using:
+
+```bash
+node index.js`: 
+```
+
+  - Option 3: Using ts-node (Development shortcut): 
+
+Install `ts-node` along with ts: 
+
+```bash
+npm install -D typescript ts-node
+```
+
+Then run: 
+
+```bash
+npx ts-node index.ts
+```
+
+This compiles the TypeScript in memory and runs the output instantly. Basically Behind the scenes it do:
+
+```
+TypeScript → JavaScript → Node execution
+```
 
 # TypeScript Introduction:
 
@@ -68,101 +164,6 @@ Note: Superset means a language that includes all features of another language, 
 | Basic editor support, limited IntelliSense.                  | Rich editor support, full IntelliSense with type information                         |
 
 Note: Runtime means when the code is actually executing in the browser or Node.js. Errors that occur at this stage are called runtime errors. If they are not handled properly, they can crash the application,
-
-## How to run TypeScript:
-
-- Step 1: Install Node.js for windows/linux/mac using NVM with NPM:
-
-![alt text](./assets/images/typeScript-introduction/node.js-installing.png)
-
-- Step 2: Install TypeScript:
-
-  - Option 1: Global install (Good for learning raw TS)
-
-```bash
-npm install -g typescript
-```
-
-By using the -g flag, we install TypeScript globally on our computer. But when we build real projects, we should install TypeScript as a dev dependency, so it only works inside that project.
-
-  - Option 2: Project-based install (Recommended for real projects)
-
-```bash
-npm install typescript --save-dev
-```
-Now TypeScript is installed only inside that project. To use the compiler:
-
-```bash
-npx tsc index.ts
-```
-
-- step 3: First program: 
-
-```ts
-const str: string = 'Hello World'
-console.log(str)
-```
-
-Now How to See the Output?
-
-  - Option 1: Using Node.js directly (Node 22.6.0+)
-
-```bash
-node index.ts
-```
-
-Output: 
-```
-Hello World
-```
-
-We might wondered that how node understand ts code? 
-
-Starting from Node.js v22.6.0, Node introduced Type Stripping. Type Stripping means:
-- Node removes typeScript from the file
-- Then executes the remaining JavaScript
-
-So Node is NOT running TypeScript directly. It removes the types first, then runs JavaScript behind the scenes. But remember It only can remove basic type annotations. So advance TS features like enum, namespace etc  might not works. For that case we need to manually compiled the ts code by using TypeScript Compiler `tsc` so se the output of our code in raw js. 
-
-  - Option 2: Using TypeScript Compiler (TSC)
-Compile the file manually using TypeScript Compiler:
-
-```bash
-tsc index.ts
-```
-
-Now we can see a new index.js file create, se basically TSC convert you index.ts to index.js:
-
-```js
-// index.js
-var str = 'Hello World';
-console.log(str);
-```
-so, now our code runner extension on vs code works, or you can see output manually by using `node index.js`: 
-
-```
-Hello World
-```
-
-  - Option 3: Using ts-node (Development shortcut): 
-
-Install `ts-node` along with ts: 
-
-```bash
-npm install typescript ts-node --save-dev
-```
-
-Then run: 
-
-```bash
-npx ts-node index.ts
-```
-
-This compiles the TypeScript in memory and runs the output instantly. Basically Behind the scenes it do:
-
-```
-TypeScript → JavaScript → Node execution
-```
 
 ## Inference vs Explicit Typing (Type Annotation): 
 In TypeScript there are two main ways to handle types: 
