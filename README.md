@@ -10,7 +10,7 @@
     - [2.4.2. Explicit Typing (Type Annotation):](#242-explicit-typing-type-annotation)
     - [2.4.3. When to use what:](#243-when-to-use-what)
 - [3. Number, Boolean, String:](#3-number-boolean-string)
-- [4. Any, Unknown, Never, undefined \& null](#4-any-unknown-never-undefined--null)
+- [4. Any, Unknown, Undefined, Null \& Never,](#4-any-unknown-undefined-null--never)
 - [5. Literal, as const and readonly:](#5-literal-as-const-and-readonly)
 - [6. union:](#6-union)
 - [7. enum:](#7-enum)
@@ -221,10 +221,9 @@ let username: string = "Tamim";
 let greeting: string = `Hello, ${username}!`;
 ```
 
-# 4. Any, Unknown, Never, undefined & null
+# 4. Any, Unknown, Undefined, Null & Never,
 
-- any
-any disables TypeScript’s type checking for that specific variable. It allows us to assign any value and perform any operation without development (vs code level) and compile-time errors.
+- **any**: Disables TypeScript’s type checking for that specific variable. It allows us to assign any value and perform any operation without development (vs code level) and compile-time errors.
 
 ```ts
 let something: any;
@@ -235,6 +234,17 @@ something = true;       // boolean
 something = [1, 2, 3]; // array
 ```
 
+```ts
+let something
+
+something = 42;         // number
+something = "Hello";    // string
+something = true;       // boolean
+something = [1, 2, 3]; // array
+```
+
+Note: if a variable are empty ts by default infer it to any type, so we can assign any value to it.
+
 Since, any bypasses type safety, TypeScript will not prevent invalid operations:
 
 ```ts
@@ -243,8 +253,7 @@ something.nonExistentMethod(); // No error at compile time (unsafe)
 
 Note: It is strongly recommended to avoid any in production code because it removes all type checking by ts and can introduce hidden runtime bugs.
 
-- unknown
-unknown is similar to any, but type-safe. We can assign any value to an unknown variable, but cannot perform operations on it until narrow its type using type guards such as typeof, instanceof, Array.isArray(), or custom type guards.
+- **unknown**: Similar to any, but type-safe. We can assign any value to an unknown variable, but cannot perform operations on it until narrow its type using type guards such as typeof, instanceof, Array.isArray(), or custom type guards.
 
 ```ts
 let value: unknown;
@@ -255,18 +264,58 @@ value = 10.23435;  // number
 
 // console.log(value.toFixed(2)); 
 // Error: Object is of type 'unknown'.
-```
 
-we must check the type before using it:
-
-```ts
+// we must check the type before using it:
 console.log(typeof value === "number" && value.toFixed(2)); // 10.23
 ```
 
-Note: A type guard is a runtime check that narrows a variable’s type within a specific scope so TypeScript can safely infer a more specific type.
+- **undefined:** In js undefined is a primitive data type and default value given by JavaScript when JavaScript expects a value but doesn’t find one:
 
-- Never: 
-never represents a value that can never exist. It is used for functions that never return or for logically unreachable code paths.
+```js
+let a;
+console.log(a); // undefined
+
+// or 
+let b = undefined
+console.log(b); // undefined
+
+// or 
+let c = undefined;
+c = "hi"
+console.log(c); // hi
+```
+
+But in typescript when we use undefined as a type it means that the variable can only have the value undefined. 
+
+```ts
+let a: undefined;
+console.log(a); // undefined
+
+// or 
+let b: undefined = undefined;
+console.log(b); // undefined
+
+// or 
+let c: undefined = undefined;
+c = "hi" // Type '"hi"' is not assignable to type 'undefined'.
+```
+
+
+- **Null:** represents an intentional absence of a value. It is typically used when you explicitly want to indicate that something is empty or not set.
+
+```ts
+let selectedUser: string | null = null;
+
+console.log(selectedUser); // null
+
+selectedUser = "Tamim";
+console.log(selectedUser); // "Tamim"
+
+selectedUser = null;
+console.log(selectedUser); // null
+```
+
+- **Never:** Represents a value that can never exist. It is used for functions that never return or for logically unreachable code paths.
 
 ```ts
 function throwError(message: string): never {
@@ -278,26 +327,6 @@ function throwError(message: string): never {
 function infiniteLoop(): never {
   while (true) {}
 }
-```
-
-- Undefined: 
-undefined means a variable has been declared but not assigned a value.
-
-```ts
-let notAssigned: undefined = undefined;
-console.log(notAssigned); // undefined
-```
-
-Note: In JavaScript, variables are undefined by default if not initialized. In TypeScript, you must explicitly include undefined in the type if a value may be missing.
-
-- Null: 
-null represents an intentional absence of a value. It is typically used when you explicitly want to indicate that something is empty or not set.
-
-```ts
-let selectedUser: string | null = null;
-
-selectedUser = "Tamim";
-selectedUser = null;
 ```
 
 #  5. Literal, as const and readonly:
