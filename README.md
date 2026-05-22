@@ -555,7 +555,6 @@ let person: {
 }
 
 // Optional Properties
-
 let user: {
     name: string,
     age?: number
@@ -563,8 +562,6 @@ let user: {
     name: "Tamim"
 }
 
-console.log(person)
-console.log(user)
 
 // Readonly Properties
 let admin: {
