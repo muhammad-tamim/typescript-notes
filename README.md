@@ -17,30 +17,31 @@
 - [8. Array and Tuple:](#8-array-and-tuple)
 - [9. Function:](#9-function)
 - [10. Object:](#10-object)
-- [11. Type Alias, Interface and Intersection:](#11-type-alias-interface-and-intersection)
-- [12. Type Assertion:](#12-type-assertion)
-- [13. Generics](#13-generics)
-    - [13.0.1. Constrain](#1301-constrain)
-    - [13.0.2. keyof:](#1302-keyof)
-- [14. Type Guards](#14-type-guards)
-    - [14.0.1. Typeof:](#1401-typeof)
-    - [14.0.2. in Operator:](#1402-in-operator)
-    - [14.0.3. Instanceof:](#1403-instanceof)
-    - [14.0.4. Equality Narrowing:](#1404-equality-narrowing)
-    - [14.0.5. Truthiness Narrowing:](#1405-truthiness-narrowing)
-    - [14.0.6. Array.isArray():](#1406-arrayisarray)
-- [15. Utility Types:](#15-utility-types)
-- [16. OOP:](#16-oop)
-    - [16.0.1. Classes:](#1601-classes)
-    - [16.0.2. Static Keyword:](#1602-static-keyword)
-    - [16.0.3. The Four Pillars of OOP:](#1603-the-four-pillars-of-oop)
-      - [16.0.3.1. Encapsulation:](#16031-encapsulation)
-      - [16.0.3.2. Abstraction:](#16032-abstraction)
-        - [16.0.3.2.1. Difference Between Encapsulation and Abstraction:](#160321-difference-between-encapsulation-and-abstraction)
-      - [16.0.3.3. Inheritance:](#16033-inheritance)
-      - [16.0.3.4. Polymorphism:](#16034-polymorphism)
-        - [16.0.3.4.1. Using Methods Overriding:](#160341-using-methods-overriding)
-        - [16.0.3.4.2. Using Duck Typing:](#160342-using-duck-typing)
+- [11. Type Alias and Interface:](#11-type-alias-and-interface)
+- [12. intersection:](#12-intersection)
+- [13. Type Assertion:](#13-type-assertion)
+- [14. Generics](#14-generics)
+    - [14.0.1. Constrain](#1401-constrain)
+    - [14.0.2. keyof:](#1402-keyof)
+- [15. Type Guards](#15-type-guards)
+    - [15.0.1. Typeof:](#1501-typeof)
+    - [15.0.2. in Operator:](#1502-in-operator)
+    - [15.0.3. Instanceof:](#1503-instanceof)
+    - [15.0.4. Equality Narrowing:](#1504-equality-narrowing)
+    - [15.0.5. Truthiness Narrowing:](#1505-truthiness-narrowing)
+    - [15.0.6. Array.isArray():](#1506-arrayisarray)
+- [16. Utility Types:](#16-utility-types)
+- [17. OOP:](#17-oop)
+    - [17.0.1. Classes:](#1701-classes)
+    - [17.0.2. Static Keyword:](#1702-static-keyword)
+    - [17.0.3. The Four Pillars of OOP:](#1703-the-four-pillars-of-oop)
+      - [17.0.3.1. Encapsulation:](#17031-encapsulation)
+      - [17.0.3.2. Abstraction:](#17032-abstraction)
+        - [17.0.3.2.1. Difference Between Encapsulation and Abstraction:](#170321-difference-between-encapsulation-and-abstraction)
+      - [17.0.3.3. Inheritance:](#17033-inheritance)
+      - [17.0.3.4. Polymorphism:](#17034-polymorphism)
+        - [17.0.3.4.1. Using Methods Overriding:](#170341-using-methods-overriding)
+        - [17.0.3.4.2. Using Duck Typing:](#170342-using-duck-typing)
 
 # 1. Setup:
 
@@ -583,10 +584,9 @@ let userConst = {
 userConst.name = "Muhamamd" // Cannot assign to 'name' because it is a read-only property.
 ```
 
-# 11. Type Alias, Interface and Intersection: 
+# 11. Type Alias and Interface: 
 
-- Type Alias: 
-A type alias allows you to define a custom type that can be reused throughout your code. We need to use `type` keyword to create an type alias.
+- **Type Alias:** Allows us to define a custom type that can be reused throughout our code. We need to use `type` keyword to create an type alias.
 
 ```ts
 // Without type alias
@@ -604,7 +604,7 @@ const user1: {
 type User = {
     id: number;
     name: string;
-    isAdmin?: boolean; // optional property
+    isAdmin?: boolean; 
 };
 
 const user2: User = {
@@ -644,13 +644,7 @@ const userId1: ID = "abc123";
 const userId2: ID = 101;
 ```
 
-- Interface: 
-Defines the shape of an object: 
-
-**Note:** 
-- Use interface → for object structure and class only
-- Use type alias → for everything else or developer often used type alias also objects
-
+- **Interface:** Defines the shape of an object: 
 
 ```ts
 // without interface
@@ -674,20 +668,13 @@ const user2: User = {
     name: "tamim",
     age: 20
 }
-
-// with type alias
-type User = {
-    name: string;
-    age: number;
-    isAdmin?: boolean; 
-}
-const user3: User = {
-    name: "tamim",
-    age: 20
-}
 ```
 
-- intersection: 
+**Note:** 
+  - Use interface → for object structure and class only
+  - Use type alias → for everything else or developer often used type alias also objects
+
+# 12. intersection:
 Combines multiple type alias. Unlike union here the value must be satisfy all type alias that are combined by intersection. It is written using the and (&) symbol.
 
 ```ts
@@ -710,7 +697,7 @@ Type '{ name: string; }' is not assignable to type 'Person'.
 */
 ```
 
-# 12. Type Assertion: 
+# 13. Type Assertion: 
 Sometimes TypeScript doesn’t know the exact type and cannot infers type correctly. Type assertion lets you override TypeScript's type and force a value to be treated as a specific type. 
 
 we used type assertion: 
@@ -737,7 +724,7 @@ data.name = "Tamim";
 data.age = 20;
 ```
 
-# 13. Generics
+# 14. Generics
 Generics allow us to write reusable code that works with multiple types while keeping strong type safety. Instead of using any, which removes type checking, generics let us pass types by argument.
 
 ```ts
@@ -846,7 +833,7 @@ const userList: GenericArray<User> = [
 ```
 
 
-### 13.0.1. Constrain
+### 14.0.1. Constrain
 Generic constraints allow you to restrict what types are allowed in a generic. we do this using extends keyword.
 
 ```ts
@@ -909,7 +896,7 @@ const result1 = addStudentToCourse(student1)
 const result2 = addStudentToCourse(student2) // error
 ```
 
-### 13.0.2. keyof: 
+### 14.0.2. keyof: 
 keyof is an operator that extracts all keys of a type as a union of string literal types.
 
 ```ts
@@ -963,12 +950,12 @@ getProperty(user, "name")
 - T[K] = User["name"] = string
 - So return type = string
 
-# 14. Type Guards
+# 15. Type Guards
 Type guards help TypeScript narrow a variable’s type at runtime.
 
 When a variable can have multiple possible types (union type), TypeScript needs extra information to know what operations are safe. A type guard tells TypeScript At this point, the value is this type.
 
-### 14.0.1. Typeof:
+### 15.0.1. Typeof:
 
 ```ts
 function printValue(v: string | number) {
@@ -1002,7 +989,7 @@ const result2 = add("2", 2)
 console.log(result1, result2) // 4 22
 ```
 
-### 14.0.2. in Operator:
+### 15.0.2. in Operator:
 Checks if a property exists in the object:
 
 ```ts
@@ -1019,7 +1006,7 @@ function checkRole(person: Admin | User) {
 
 checkRole({ username: "Tamim", isAdmin: true }) // Admin user
 ```
-### 14.0.3. Instanceof:
+### 15.0.3. Instanceof:
 
 the instanceof operator is used to check whether an object is an instance of a specific class or not.
 
@@ -1111,7 +1098,7 @@ getUserInfo(student1) // he study 10 daily
 getUserInfo(Teacher1) // i take 5 of class
 ```
   
-### 14.0.4. Equality Narrowing:
+### 15.0.4. Equality Narrowing:
 
 Using ===, !== to narrow types.
 
@@ -1128,7 +1115,7 @@ function compare(a: string | number, b: string | number) {
 compare('2', 2) // Different values
 ```
 
-### 14.0.5. Truthiness Narrowing:
+### 15.0.5. Truthiness Narrowing:
 TypeScript narrows based on truthy/falsy values.
 
 ```ts
@@ -1142,7 +1129,7 @@ function print(msg?: string) {
 }
 print() // Please write something
 ```
-### 14.0.6. Array.isArray():
+### 15.0.6. Array.isArray():
 
 ```ts
 function process(x: string | string[]) {
@@ -1158,7 +1145,7 @@ process(['a', 'b']) // Array
   
 
 
-# 15. Utility Types: 
+# 16. Utility Types: 
 TypeScript provides several built-in utility types that help you transform existing types and create new types from them.
 
 Utility types are extremely important because they save you time, reduce code duplication, and let you write cleaner, more flexible TypeScript.
@@ -1302,9 +1289,9 @@ numbers.push(4); // ❌ Error
 numbers[0] = 10; // ❌ Error
 ```
 
-# 16. OOP:
+# 17. OOP:
 
-### 16.0.1. Classes: 
+### 17.0.1. Classes: 
 
 ```ts
 class Person {
@@ -1345,7 +1332,7 @@ const p1 = new Person("tamim", 20)
 console.log(p1.greet()); // hello, I'm tamim
 ```
 
-### 16.0.2. Static Keyword:
+### 17.0.2. Static Keyword:
 
 ```ts
 class MathUtils {
@@ -1411,10 +1398,10 @@ console.log(Counter.increment()) // 3
 console.log(Counter.increment()) // 4
 console.log(Counter.increment()) // 5
 ```
-### 16.0.3. The Four Pillars of OOP:
+### 17.0.3. The Four Pillars of OOP:
 
 
-#### 16.0.3.1. Encapsulation: 
+#### 17.0.3.1. Encapsulation: 
 
 Encapsulation (in js) is the process of hiding the internal state (properties) of an object using private fields (#), and providing controlled access through methods or getters/setters. This protects the object’s data and prevents unintended modifications.
 
@@ -1558,7 +1545,7 @@ console.log(acc.balance); // ✔ 700
 // acc._balance = 5000;   // ❌ ERROR (private)
 ```
 
-#### 16.0.3.2. Abstraction: 
+#### 17.0.3.2. Abstraction: 
 Abstraction is the process of hiding implementation details using private field and showing only the necessary functionality to the user.
 
 ```ts
@@ -1663,7 +1650,7 @@ c.start(); // ✔
 c.stop();  // ✔
 ```
 
-##### 16.0.3.2.1. Difference Between Encapsulation and Abstraction: 
+##### 17.0.3.2.1. Difference Between Encapsulation and Abstraction: 
 
 | Encapsulation                     | Abstraction                                    |
 | --------------------------------- | ---------------------------------------------- |
@@ -1671,7 +1658,7 @@ c.stop();  // ✔
 | getters/setters or public methods | Public methods                                 |
 
 
-#### 16.0.3.3. Inheritance: 
+#### 17.0.3.3. Inheritance: 
 
 Inheritance is a process that allows a chaild class inherits properties and methods from a parent class using extends keyword and super() method.
 
@@ -1752,14 +1739,14 @@ const teacher1 = new Teacher("y", 20, "dhaka", "Senior Teacher")
 teacher1.takeClass(4)
 ```
 
-#### 16.0.3.4. Polymorphism: 
+#### 17.0.3.4. Polymorphism: 
 Polymorphism is the process that allows a child class to inherit methods from a parent class using the extends keyword, and lets the same method behave differently depending on the child class.
 
 We can do Polymorphism using two ways: 
 1. Methods Overriding: Child class changes parent method behavior.
 2. Duck Typing(Interfae-Based): Different objects implement the same method name.
 
-##### 16.0.3.4.1. Using Methods Overriding: 
+##### 17.0.3.4.1. Using Methods Overriding: 
 Child class changes parent method behavior.
 
 ```js
@@ -1789,7 +1776,7 @@ cat.makeSound(); // Cat meows
 ```
 Here, makeSound() is overridden in each child class. Same method name behaves differently.
 
-##### 16.0.3.4.2. Using Duck Typing:
+##### 17.0.3.4.2. Using Duck Typing:
 Different objects implement the same method name, allowing them to be used interchangeably.
 
 ```js
