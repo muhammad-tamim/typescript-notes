@@ -11,7 +11,7 @@
     - [2.4.3. When to use what:](#243-when-to-use-what)
 - [3. Number, Boolean, String:](#3-number-boolean-string)
 - [4. Any, Unknown, Undefined, Null \& Never,](#4-any-unknown-undefined-null--never)
-- [5. Literal, as const and readonly:](#5-literal-as-const-and-readonly)
+- [5. Literal, readonly and as const:](#5-literal-readonly-and-as-const)
 - [6. union:](#6-union)
 - [7. enum:](#7-enum)
 - [8. Array and Tuple:](#8-array-and-tuple)
@@ -145,7 +145,7 @@ TypeScript → JavaScript → Node execution
 
 TypeScript is a superset of JavaScript that design to make large-scale application development safer, more predictable, and easier to maintain. It is a compiled language, meaning TypeScript code first converted into JavaScript before execution.
 
-Note: Superset means a language that includes all features of another language, plus add additional features.
+**Note:** Superset means a language that includes all features of another language, plus add additional features.
 
 ![image](./assets/images/typeScript-introduction/hello-world.webp)
 
@@ -164,7 +164,7 @@ Note: Superset means a language that includes all features of another language, 
 | Errors appear only at runtime                                | Errors appear while writing code (during development at vs code) and at compile time |
 | Basic editor support, limited IntelliSense.                  | Rich editor support, full IntelliSense with type information                         |
 
-Note: Runtime means when the code is actually executing in the browser or Node.js. Errors that occur at this stage are called runtime errors. If they are not handled properly, they can crash the application,
+**Note:** Runtime means when the code is actually executing in the browser or Node.js. Errors that occur at this stage are called runtime errors. If they are not handled properly, they can crash the application,
 
 ## 2.4. Inference vs Explicit Typing (Type Annotation): 
 In TypeScript there are two main ways to handle types: 
@@ -193,7 +193,7 @@ const user = {
 ```ts
 const id = 2; // const id: 2
 ```
-Note: here, id types is set to 2, Because const data types are immutable.
+**Note:** here, id types is set to 2, Because const data types are immutable.
 
 ### 2.4.2. Explicit Typing (Type Annotation): 
 Explicit typing is when we assigns the type ourself. Means here, we manually define the type.
@@ -243,7 +243,7 @@ something = true;       // boolean
 something = [1, 2, 3]; // array
 ```
 
-Note: if a variable are empty ts by default infer it to any type, so we can assign any value to it.
+**Note:** if a variable are empty ts by default infer it to any type, so we can assign any value to it.
 
 Since, any bypasses type safety, TypeScript will not prevent invalid operations:
 
@@ -251,7 +251,7 @@ Since, any bypasses type safety, TypeScript will not prevent invalid operations:
 something.nonExistentMethod(); // No error at compile time (unsafe)
 ```
 
-Note: It is strongly recommended to avoid any in production code because it removes all type checking by ts and can introduce hidden runtime bugs.
+**Note:** It is strongly recommended to avoid any in production code because it removes all type checking by ts and can introduce hidden runtime bugs.
 
 - **unknown**: Similar to any, but type-safe. We can assign any value to an unknown variable, but cannot perform operations on it until narrow its type using type guards such as typeof, instanceof, Array.isArray(), or custom type guards.
 
@@ -329,15 +329,14 @@ function infiniteLoop(): never {
 }
 ```
 
-#  5. Literal, as const and readonly:
+#  5. Literal, readonly and as const:
 
-- Literal: 
-Represents an exact value that a variable can hold. Means it's not represent a data type as a type, its represents an exact value as a type.
+- **Literal:** Represents an exact value that a variable can hold. Means it's not represent a data type as a type, its represents an exact value as a type.
 
 ```ts
 let direction: 'left';
 
-// direction = 'right'; // Type '"right"' is not assignable to type '"left"'.
+direction = 'right'; // Type '"right"' is not assignable to type '"left"'.
 
 direction = 'left'
 ```
@@ -349,22 +348,26 @@ let move: 'left' | 'right';
 
 move = 'left';
 move = 'right';
-// move = 'up';  // Type '"up"' is not assignable to type '"left" | "right"'.
+move = 'up';  // Type '"up"' is not assignable to type '"left" | "right"'.
 ```
 
-- readonly:
-readonly prevents a object property or array element being reassigned after initialization.  
+- **readonly**: Prevents a object property or array element being reassigned after initialization.  
 
-Note; unlike literal, its represent a data types as a type. so it just prevent us to modify a value after initialization.
-
+**Note:** unlike literal, its represent a data types as a type. so it just prevent us to modify a value after initialization.
 
 ```ts
 const user: { readonly id: string, name: string } = {
-    id: "123", // (property) id: string
-    name: "Tamim" // (property) name: string
+    id: "123",
+    name: "Tamim"
 };
+/*
+ const user: {
+    readonly id: string;
+    name: string;
+} 
+*/
 
-// user.id = "456";  // Cannot assign to 'id' because it is a read-only property.
+user.id = "456";  // Cannot assign to 'id' because it is a read-only property.
 
 user.name = "Alex";
 ```
@@ -372,21 +375,19 @@ user.name = "Alex";
 ```ts
 const numbers: readonly number[] = [1, 2, 3];
 
-// numbers.push(4); 
-// Property 'push' does not exist on type 'readonly number[]'.
+numbers.push(4); // Property 'push' does not exist on type 'readonly number[]'.
 ```
 
-Note: readonly is a shallow restriction. It does NOT deeply freeze nested objects or arrays.
+**Note:** readonly is a shallow restriction. It does NOT deeply freeze nested objects or arrays.
 
 
-- as const:
-Automatically converts a value to its most specific literal type and makes it deeply readonly. so, its combine literal type and readonly at a time. Means it represents a value as a type (literal) +  prevent us to modify a value after initialization (readonly).
+- **as const**: Automatically converts a value to its most specific literal type and makes it deeply readonly. so, its combine literal type + readonly at a time. Means it represents a value as a type (literal) +  prevent us to modify a value after initialization (readonly).
 
 
 ```ts
 const directions = ["left", "right", "up", "down"] as const; // const directions: readonly ["left", "right", "up", "down"]
 
-// directions.push("forward"); // Property 'push' does not exist on type 'readonly ["left", "right", "up", "down"]'.
+directions.push("forward"); // Property 'push' does not exist on type 'readonly ["left", "right", "up", "down"]'.
 ```
 
 
@@ -403,7 +404,7 @@ const person: {
 }
 */
 
-// person.name = "Alex"; // Cannot assign to 'name' because it is a read-only property.
+person.name = "Alex"; // Cannot assign to 'name' because it is a read-only property.
 ```
 
 # 6. union: 
@@ -448,7 +449,7 @@ enum Days {
 let dayName: Days = Days.saturday
 console.log(dayName) // 0
 
-// Note: If you don’t assign values, TypeScript gives automatic numeric values starting from 0.
+// **Note:** If you don’t assign values, TypeScript gives automatic numeric values starting from 0.
 ```
 
 ```ts
@@ -463,7 +464,7 @@ let move: Direction = Direction.Left;
 console.log(move) // left
 ```
 
-Note: Developer usually prefer literal unions instead of enums.
+**Note:** Developer usually prefer literal unions instead of enums.
 
 # 8. Array and Tuple: 
 
@@ -642,7 +643,7 @@ const userId2: ID = 101;
 - Interface: 
 Defines the shape of an object: 
 
-Note: 
+**Note:** 
 - Use interface → for object structure and class only
 - Use type alias → for everything else or developer often used type alias also objects
 
@@ -1322,7 +1323,7 @@ p1.greet() // hi, i am tamim
 console.log(new Person("nasrin", 2)) // Person { name: 'nasrin', age: 2 }
 ```
 
-Note: In JavaScript, we don’t need to declare class properties because they are automatically created when assigned in the constructor. In TypeScript, however, we must declare class properties explicitly unless we use an access modifier like public, private, or protected in the constructor, which automatically declares and assigns them:
+**Note:** In JavaScript, we don’t need to declare class properties because they are automatically created when assigned in the constructor. In TypeScript, however, we must declare class properties explicitly unless we use an access modifier like public, private, or protected in the constructor, which automatically declares and assigns them:
 
 ```ts
 class Person {
@@ -1413,7 +1414,7 @@ console.log(Counter.increment()) // 5
 
 Encapsulation (in js) is the process of hiding the internal state (properties) of an object using private fields (#), and providing controlled access through methods or getters/setters. This protects the object’s data and prevents unintended modifications.
 
-Note:
+**Note:**
 - Private fileds Properties cannot be accessed outside the class and it Declared using #
 - Getter and Setter allow accessing and modifying private fields like normal properties, instead of calling methods.
 

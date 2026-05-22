@@ -1,9 +1,3 @@
-let selectedUser: string | null = null;
+const numbers: readonly number[] = [1, 2, 3];
 
-console.log(selectedUser); // null
-
-selectedUser = "Tamim";
-console.log(selectedUser); // "Tamim"
-
-selectedUser = null;
-console.log(selectedUser); // null
+numbers.push(4); // Property 'push' does not exist on type 'readonly number[]'.
