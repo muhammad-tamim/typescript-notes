@@ -410,36 +410,39 @@ person.name = "Alex"; // Cannot assign to 'name' because it is a read-only prope
 # 6. union: 
 Combine multiple literal types or general types into one variable. It is written using the pipe (|) symbol.
 
-- literal union: 
+- **literal union:** 
 
 ```ts
 let direction: "left" | "right"; 
 direction = "left";
 direction = "right"
-// direction = "UP" // Type '"UP"' is not assignable to type '"left" | "right"'.
+
+direction = "UP" // Type '"UP"' is not assignable to type '"left" | "right"'.
 ```
+
 ```ts
-let dice: 1 | 2 | 3 | 4 | 5 | 6; // literal union
+let dice: 1 | 2 | 3 | 4 | 5 | 6; 
 
 dice = 3;
 dice = 6;
 dice = 7; // Type '7' is not assignable to type '1 | 2 | 3 | 4 | 5 | 6'.
 ```
 
-- general union:
+- **general union:**
 
 ```ts
 let id: number | string; 
 
 id = 234
 id = 'id123'
-// id = true // Type 'boolean' is not assignable to type 'string | number'.
+id = true // Type 'boolean' is not assignable to type 'string | number'.
 ```
 
 # 7. enum: 
 Enum is a collection of named constants grouped under a single type, which can have numeric (default) or string values.
 
 ```ts
+//  here we don’t assign values, so ts gives automatic numeric values starting from 0.
 enum Days {
     saturday, // 0
     sunday, // 1
@@ -448,8 +451,6 @@ enum Days {
 
 let dayName: Days = Days.saturday
 console.log(dayName) // 0
-
-// **Note:** If you don’t assign values, TypeScript gives automatic numeric values starting from 0.
 ```
 
 ```ts
@@ -462,13 +463,15 @@ enum Direction {
 
 let move: Direction = Direction.Left;
 console.log(move) // left
+
+let move2: Direction = Direction.top // Property 'top' does not exist on type 'typeof Direction'.
 ```
 
 **Note:** Developer usually prefer literal unions instead of enums.
 
 # 8. Array and Tuple: 
 
-- Array: 
+- **Array:** 
 
 ```ts
 let numbers: number[] = [1, 2, 3]
@@ -477,7 +480,7 @@ let characters: string[] = ['a', 'b']
 let mix: (string | number)[] = [1, "Hello", 2, 4, 'hi'] // union array
 ```
 
-- Tuple:
+- **Tuple:**
 Tuples are fixed-length arrays with fixed types for each element.
 
 ```ts
@@ -486,6 +489,12 @@ const user2: [number, number] = [20, 20]
 
 // tuple with optional element
 const user3: [string, number?] = ["tamim"]
+
+const user4: [string, string] = ['tamim', '20', 20]
+/*
+Type '[string, string, number]' is not assignable to type '[string, string]'. 
+Source has 3 element(s) but target allows only 2.ts(2322)
+*/
 ```
 
 # 9. Function: 
@@ -500,8 +509,7 @@ let greet1 = (name: string): string => {
 }
 ```
 
-- void:
-void is used for functions that do not return anything. You can’t return any value (except undefined optionally).
+- **void:** Used for functions that do not return anything. We can’t return any value (except undefined optionally).
 
 ```ts
 function sayHello(): void {
@@ -521,8 +529,7 @@ function optionalReturn(): void {
 console.log(optionalReturn())
 ```
 
-- never: 
-never represents a value that can never exist. It is used for functions that never return or for logically unreachable code paths.
+- **never:** Represents a value that can never exist. It is used for functions that never return or for logically unreachable code paths.
 
 ```ts
 function throwError(): never {
