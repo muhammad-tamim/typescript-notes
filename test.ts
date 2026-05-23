@@ -1,7 +1,10 @@
-function optionalReturn(): void {
-    // return undefined;
-    // same as
-    return;
-}
+type User = {
+    name: string;
+    age: number;
+};
 
-console.log(optionalReturn())
+let data = {} as User;
+data.name = "Tamim";
+data.age = 20;
+
+console.log(data) // { name: 'Tamim', age: 20 }

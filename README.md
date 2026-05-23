@@ -698,11 +698,11 @@ Type '{ name: string; }' is not assignable to type 'Person'.
 ```
 
 # 13. Type Assertion: 
-Sometimes TypeScript doesn’t know the exact type and cannot infers type correctly. Type assertion lets you override TypeScript's type and force a value to be treated as a specific type. 
+Sometimes TypeScript doesn’t know the exact type and cannot infers type correctly. Type assertion lets us override TypeScript's type and force a value to be treated as a specific type. 
 
 we used type assertion: 
 - When we know more about the type than TypeScript
-- For third party packages that doesn't  support ts
+- For third party packages that doesn't support ts
 
 We can perform type assertion using using `as` keyword: 
 
@@ -710,7 +710,7 @@ We can perform type assertion using using `as` keyword:
 let someValue: any = "Hello TypeScript";
 let strLength: number = (someValue as string).length;
 
-console.log(strLength); // 17
+console.log(strLength); // 16
 ```
 
 ```ts
@@ -722,6 +722,35 @@ type User = {
 let data = {} as User;
 data.name = "Tamim";
 data.age = 20;
+
+console.log(data) // { name: 'Tamim', age: 20 }
+```
+
+**Note:** There are one more type assertion feature available in ts, that is non-null assertion operator (!). It is used to tell TypeScript that a value will never be null or undefined, even if TypeScript cannot infer that on its own.
+
+```ts
+const input = document.getElementById("email")!;
+
+console.log(input.innerHTML);
+```
+
+but its not safe to use, because if the element with id "email" is not found, then input will be null and accessing innerHTML will cause a runtime error. So we should use it only when we are absolutely sure that the value is not null or undefined.
+
+```js
+// Safer Alternative
+const input = document.getElementById("email");
+
+if (input) {
+    console.log(input.innerHTML);
+}
+```
+```js
+// or we can use standard type assertion with as keyword
+const input = document.getElementById("email") as HTMLInputElement;
+
+if (input) {
+    console.log(input.value);
+}
 ```
 
 # 14. Generics
