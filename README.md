@@ -1111,9 +1111,7 @@ process('hello') // String
 
 
 # 16. Utility Types: 
-TypeScript provides several built-in utility types that help you transform existing types and create new types from them.
-
-Utility types are extremely important because they save you time, reduce code duplication, and let you write cleaner, more flexible TypeScript.
+TypeScript provides several built-in utility types that help us transform existing types and create new types from them. Utility types are extremely important because they save our time, reduce code duplication, and let us write cleaner, more flexible TypeScript.
 
 - Partial<> : Makes all Properties of a type optional: 
 
@@ -1125,9 +1123,13 @@ type User = {
 
 type PartialUser = Partial<User>;
 
-const user: PartialUser = {
-    name: "Tamim" // age is optional
+const user: PartialUser = {}
+const user2: PartialUser = {
+    name: "Tamim"
 }
+
+console.log(user) // {}
+console.log(user2) // { name: 'Tamim' }
 ```
 
 - Required<>: Opposite of Partial — makes all properties required.
@@ -1144,6 +1146,7 @@ const user: RequiredUser = {
     name: "Tamim",
     age: 20
 }
+const user2: RequiredUser = {} // Type '{}' is missing the following properties from type 'Required<User>': name, age
 ```
 - Readonly<>: Makes all properties immutable (cannot be changed):
 
@@ -1158,32 +1161,24 @@ const user: Readonly<User> = {
     age: 20
 };
 
-// or
-const user2 = Readonly<user>
-
-user.age = 21; // ❌ Error: cannot modify readonly property
+user.age = 21; // Cannot assign to 'age' because it is a read-only property.
 ```
 
-- Record <K, T>: Used to create an object with specific key type K and value type T:
+- Record <>: Used to create an object with specific key type and value type:
 
 ```ts
 type Scores = Record<string, number>;
+// manual version of record: 
+/*
+type Scores = {
+    [key: string]: number;
+};
+*/
 
 const studentScores: Scores = {
     Tamim: 34,
     John: 40,
 }
-
-// manual version of recoard
-type Scores = {
-    [key: string]: number;
-};
-
-const studentScores: Scores = {
-    Tamim: 34,
-    John: 40,
-    Math: 100,
-};
 ```
 
 - Pick<>: Selects specific properties from a type:
@@ -1203,7 +1198,7 @@ const data: UserPreview = {
 }
 ```
 
-- Omit<>: Opposite of Pick — removes specific properties:
+- Omit<>: Opposite of Pick — removes specific properties from a type:
 
 ```ts
 type User = {
@@ -1224,8 +1219,11 @@ const user: WithoutEmail = {
 
 ```ts
 type Letters = "a" | "b" | "c";
-type RemoveB = Exclude<Letters, "b">; 
-// "a" | "c"
+type RemoveB = Exclude<Letters, "b">;
+
+const letter: RemoveB = "a"; 
+const letter2: RemoveB = "c"; 
+const letter3: RemoveB = "b"; // Type '"b"' is not assignable to type 'RemoveB'.
 ```
 
 - Extract<>: Opposite of Exclude, keeps only matching types: 
@@ -1233,7 +1231,9 @@ type RemoveB = Exclude<Letters, "b">;
 ```ts
 type Letters = "a" | "b" | "c";
 type OnlyB = Extract<Letters, "b" | "d">;
-// "b"
+
+const letter: OnlyB = "b"
+const letter2: OnlyB = "a" // Type '"a"' is not assignable to type '"b"'.
 ```
 
 - NonNullable<>: Removes null and undefined:
@@ -1242,17 +1242,109 @@ type OnlyB = Extract<Letters, "b" | "d">;
 type Maybe = string | null | undefined;
 
 type Clean = NonNullable<Maybe>;
-// string
+
+function print(value: Clean) {
+    console.log(value.length);
+
+    // do not need to use type guards to check for null or undefined, because Clean does not allow those types
+}
 ```
 
-- ReadOnlyArray<>: Cereates a readonly array: 
+- ReadOnlyArray<>: Creates a readonly array: 
 
 ```ts
 const numbers: ReadonlyArray<number> = [1, 2, 3];
 
-numbers.push(4); // ❌ Error
-numbers[0] = 10; // ❌ Error
+numbers.push(4); // Property 'push' does not exist on type 'readonly number[]'.
 ```
+
+- Typeof: Extracts the type of a variable/function/class: 
+
+```ts
+const user = {
+    name: "Tamim",
+    age: 24,
+};
+
+type User = typeof user;
+
+const user2: User = {
+    name: "John Doe",
+    age: 29
+}
+```
+
+- keyof: Extracts the keys of a type as a union of string literal types: 
+
+```ts
+interface User {
+    name: string;
+    age: number;
+}
+
+type UserKeys = keyof User; // "name" | "age"
+```
+
+```ts
+interface User {
+    name: string;
+    age: number;
+}
+
+function getValue(obj: User, key: keyof User) {
+    return obj[key];
+}
+
+const user = {
+    name: "Tamim",
+    age: 22,
+};
+
+console.log(getValue(user, "name")); // Tamim
+console.log(getValue(user, "age"));  // 22
+console.log(getValue(user, "email")); // Argument of type '"email"' is not assignable to parameter of type 'keyof User'.
+```
+
+- Parameters<>: Extracts the function parameters types as tuples:
+
+```ts
+function greet(name: string, age: number) {
+    console.log(`Hello ${name}, age ${age}`);
+}
+
+type GreetParams = Parameters<typeof greet>; // type GreetParams = [name: string, age: number]
+
+const user1: GreetParams = ["Tamim", 22];
+
+const user2: GreetParams = ["Tamim"];
+// Type '[string]' is not assignable to type '[name: string, age: number]'.Source has 1 element(s) but target requires 2.
+```
+
+- ReturnType<>: Extracts the function return type:
+
+```ts
+function getUser() {
+    return {
+        name: "Tamim",
+        age: 22,
+    };
+}
+
+type User = ReturnType<typeof getUser>;
+
+/*
+type User = {
+    name: string;
+    age: number;
+}
+*/
+
+const NewUser: User = {
+    name: "Rahim",
+    age: 30,
+};  
+```
+
 
 # 17. OOP:
 
