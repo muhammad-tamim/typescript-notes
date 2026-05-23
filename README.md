@@ -959,50 +959,70 @@ getProperty(user, "name")
 - So return type = string
 
 # 15. Type Guards
-Type guards help TypeScript narrow a variable’s type at runtime.
+Type guards help TypeScript narrow down a variable’s type at runtime so TypeScript can safely understand what the variable actually is. When a variable can have multiple possible types (union type), TypeScript needs extra information to know what operations are safe. A type guard tells TypeScript At this point, the value is this type.
 
-When a variable can have multiple possible types (union type), TypeScript needs extra information to know what operations are safe. A type guard tells TypeScript At this point, the value is this type.
+```ts
+function print(value: string | number) {
+    console.log(value.length);
+    console.log(value.toFixed(2))
+}
+
+// errors
+/*
+Property 'length' does not exist on type 'string | number'.
+  Property 'length' does not exist on type 'number'.
+
+Property 'toFixed' does not exist on type 'string | number'.
+  Property 'toFixed' does not exist on type 'string'.
+*/
+```
+
+here, TypeScript shows errors while using .length or .toFixed because it cannot determine whether value is a string or a number. because .length is only valid for string and .toFixed is only valid for number.
+
+so here, if we use type guard for narrow the type, then we can safely access .length for string and .toFixed for number: 
+
+```ts
+function print(value: string | number) {
+    if (typeof value === "string") {
+        console.log(value.length);
+    } 
+    else if(typeof value === "number") {
+        console.log(value.toFixed(2));
+    }
+}
+
+print("Hello") // 5
+print(3.14159) // 3.14
+```
 
 ### 15.0.1. Typeof:
 
 ```ts
-function printValue(v: string | number) {
-    if (typeof v === "string") {
-        console.log(v.toUpperCase()); // string methods allowed
-    } else {
-        console.log(v.toFixed(2)); // number methods allowed
+function print(value: string | number) {
+    if (typeof value === "string") {
+        console.log(value.length);
+    }
+    else if (typeof value === "number") {
+        console.log(value.toFixed(2));
     }
 }
 
-printValue(20) // 20.00
-```
-
-```ts
-type NumOrStr = number | string
-
-const add = (num1: NumOrStr, num2: NumOrStr) => {
-
-    if (typeof num1 === 'number' && typeof num2 === 'number') {
-        return num1 + num2
-    }
-    else {
-        return num1.toString() + num2.toString()
-    }
-
-}
-
-const result1 = add(2, 2)
-const result2 = add("2", 2)
-
-console.log(result1, result2) // 4 22
+print("Hello") // 5
+print(3.14159) // 3.14
+print(true) // Argument of type 'boolean' is not assignable to parameter of type 'string | number'.
 ```
 
 ### 15.0.2. in Operator:
 Checks if a property exists in the object:
 
 ```ts
-type Admin = { username: string; isAdmin: true };
-type User = { username: string };
+type Admin = {
+    username: string;
+    isAdmin: true
+};
+type User = {
+    username: string
+};
 
 function checkRole(person: Admin | User) {
     if ("isAdmin" in person) {
@@ -1013,102 +1033,39 @@ function checkRole(person: Admin | User) {
 }
 
 checkRole({ username: "Tamim", isAdmin: true }) // Admin user
+checkRole({ username: "Tamim" }) // Normal user
 ```
 ### 15.0.3. Instanceof:
-
-the instanceof operator is used to check whether an object is an instance of a specific class or not.
-
-```js
-object instanceof Class
-```
-- object → the variable you want to check
-- Class → the constructor/class you are checking against
-- Returns true if the object is created from that class or a subclass, otherwise false
+The instanceof operator is used to check whether an object is an instance of a specific class or not.
 
 ```ts
 class Dog {
-  bark() { console.log("Woof!"); }
+    bark() {
+        console.log("Woof!");
+    }
 }
 
 class Cat {
-  meow() { console.log("Meow!"); }
+    meow() {
+        console.log("Meow!");
+    }
 }
 
 function speak(animal: Dog | Cat) {
-  if (animal instanceof Dog) {
-    animal.bark();
-  } else {
-    animal.meow();
-  }
+    if (animal instanceof Dog) {
+        animal.bark();
+    } else {
+        animal.meow();
+    }
 }
 
 speak(new Dog()); // Woof!
 speak(new Cat()); // Meow!
 ```
-
-```ts
-class Person {
-    name: string;
-
-    constructor(name: string) {
-        this.name = name
-    }
-    getSleep(hours: number) {
-        console.log(`he sleep ${hours} daily`)
-    }
-}
-
-class Student extends Person {
-    constructor(name: string) {
-        super(name)
-    }
-
-    doStudy(hours: number) {
-        console.log(`he study ${hours} daily`)
-    }
-}
-
-class Teacher extends Person {
-    constructor(name: string) {
-        super(name)
-    }
-
-    takeClass(hours: number) {
-        console.log(`i take ${hours} of class`)
-    }
-}
-
-const isStudent = (user: Person) => {
-    return user instanceof Student
-}
-const isTeacher = (user: Person) => {
-    return user instanceof Teacher
-}
-
-const getUserInfo = (user: Person) => {
-    if (isStudent(user)) {
-        user.doStudy(10)
-    }
-    else if (isTeacher(user)) {
-        user.takeClass(5)
-    }
-    else {
-        user.getSleep(20)
-    }
-}
-
-const person1 = new Person("x miya")
-const student1 = new Student("student kamrul")
-const Teacher1 = new Teacher("teacher lotip")
-
-getUserInfo(person1) // he sleep 20 daily 
-getUserInfo(student1) // he study 10 daily
-getUserInfo(Teacher1) // i take 5 of class
-```
   
 ### 15.0.4. Equality Narrowing:
 
-Using ===, !== to narrow types.
+Using `===` or `!==` to narrow types.
 
 ```ts
 function compare(a: string | number, b: string | number) {
@@ -1124,7 +1081,7 @@ compare('2', 2) // Different values
 ```
 
 ### 15.0.5. Truthiness Narrowing:
-TypeScript narrows based on truthy/falsy values.
+Based on `truthy/falsy` values.
 
 ```ts
 function print(msg?: string) {
@@ -1149,8 +1106,8 @@ function process(x: string | string[]) {
 }
 
 process(['a', 'b']) // Array
+process('hello') // String
 ```
-  
 
 
 # 16. Utility Types: 
