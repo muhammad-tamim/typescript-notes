@@ -801,43 +801,16 @@ type Coordinates<X, Y> = [X, Y]
 const coordinates1: Coordinates<number, number> = [20, 30]
 const coordinates2: Coordinates<string, string> = ['20', '30']
 
-console.log(coordinates1) // [20, 30]
 
-
-// -----------------
-
-type GenericArray<T> = Array<T>
-// type GenericArray<T> = T[]
-
-const strArray: GenericArray<string> = ['a', 'b', 'c']
-
-const numArray: GenericArray<number> = [1, 2, 3] // 
-
-const boolArray: GenericArray<boolean> = [true, false, true]
-```
-
-
-```ts
-// Generic with array of objects
-
+// if we have only one type of parameter, we can use T as a convention:
+type GenericArray<T> = T[] 
 // type GenericArray<T> = Array<T>
 
-// const userList: GenericArray<{ name: string, age: number }> = [
-//     {
-//         name: 'x',
-//         age: 20
-//     },
-//     {
-//         name: 'y',
-//         age: 24,
-//     },
-//     {
-//         name: 'z',
-//         age: 30
-//     }
-// ]
+const strArray: GenericArray<string> = ['a', 'b', 'c']
+const numArray: GenericArray<number> = [1, 2, 3] 
+const boolArray: GenericArray<boolean> = [true, false, true]
 
-
+// Generic with array of objects
 type GenericArray<T> = Array<T>
 
 type User = {
@@ -861,9 +834,13 @@ const userList: GenericArray<User> = [
 ]
 ```
 
+**Note:** use 
+- `type GenericArray<T> = T[]` = for simple generics
+- `type GenericArray<T> = Array<T>` = for complex generics because of better readability 
+
 
 ### 14.0.1. Constrain
-Generic constraints allow you to restrict what types are allowed in a generic. we do this using extends keyword.
+Generic constraints allow us to restrict what types are allowed in a generic. we do this using `extends` keyword.
 
 ```ts
 function printName<T extends { name: string }>(person: T) {
@@ -879,11 +856,10 @@ function toArray<T extends string | number>(value: T): T[] {
     return [value]
 }
 
-toArray("Hello")
-toArray(20)
-toArray(true) //  Argument of type 'boolean' is not assignable to parameter of type 'string | number'.
+console.log(toArray("Hello")) // [ 'Hello' ]
+console.log(toArray(20)) // [ 20 ]
+console.log(toArray(true)) //  Argument of type 'boolean' is not assignable to parameter of type 'string | number'.
 ```
-
 
 ```ts
 interface Person {
@@ -894,13 +870,16 @@ function greet<T extends Person>(value: T) {
     console.log("Hello", value.name);
 }
 
-greet({ name: "Tamim", id: 1 });   // ok
-greet({ id: 1 });                  // ❌ error
+greet({ name: "Tamim", id: 1 });
+greet({ id: 1 }); // Object literal may only specify known properties, and 'id' does not exist in type 'Person'.
 ```
 
 
 ```ts
-type student = { id: number, name: string }
+type student = {
+    id: number,
+    name: string
+}
 
 const addStudentToCourse = <T extends student>(studentInfo: T) => {
     return {
@@ -921,8 +900,8 @@ const student2 = {
     isMarried: true
 }
 
-const result1 = addStudentToCourse(student1)
-const result2 = addStudentToCourse(student2) // error
+console.log(addStudentToCourse(student1)) // { course: 'Next Lavel', id: 123, name: 'tamim', hasPen: true }
+console.log(addStudentToCourse(student2)) // error
 ```
 
 ### 14.0.2. keyof: 
