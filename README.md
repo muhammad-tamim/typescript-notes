@@ -42,6 +42,7 @@
       - [17.0.3.4. Polymorphism:](#17034-polymorphism)
         - [17.0.3.4.1. Using Methods Overriding:](#170341-using-methods-overriding)
         - [17.0.3.4.2. Using Duck Typing:](#170342-using-duck-typing)
+- [18. Problem Solving:](#18-problem-solving)
 
 # 1. Setup:
 
@@ -1967,4 +1968,469 @@ function makeAnimalSpeak(a: Animal) {
 
 makeAnimalSpeak(new Dog()); // "Dog barks"
 makeAnimalSpeak(new Cat()); // "Cat meows"
+```
+
+# 18. Problem Solving: 
+
+- **Problem 1:**
+
+Create a function **formatValue** that accepts a value which may be a **string**, **number**, or **boolean**, and returns the following based on the value type:
+
+- If the input is a **string** → return the string in **uppercase**
+- If the input is a **number** → return the number multiplied by **10**
+- If the input is a **boolean** → return the **opposite value** (`true → false`, `false → true`)
+
+**Requirements:**
+
+- You must write the correct type for the function parameter and the return type.
+- You must use type checking to handle each case.
+
+**Sample Input:**
+
+```ts
+console.log(formatValue('hello'));
+console.log(formatValue(5));
+console.log(formatValue(true));
+```
+
+**Sample Output:**
+
+```ts
+HELLO;
+50;
+false;
+```
+
+**Solution:**
+
+```ts
+// problem 1:
+const formatValue = (value: string | number | boolean): string | number | boolean => {
+    if (typeof value === "string") {
+        return value.toUpperCase()
+    }
+    else if (typeof value === "number") {
+        return value * 10
+    }
+    else if (typeof value === "boolean") {
+        return !value
+    }
+
+    return "Invalid value type"
+}
+
+console.log(formatValue('hello')); // HELLO
+console.log(formatValue(5)); // 50
+console.log(formatValue(true)); // false
+```
+
+
+- **Problem 2:**
+
+Create a function **getLength** that accepts a value which may be a **string** or an **array**, and returns the **length** of the value.
+
+- If the input is a **string** → return the number of characters.
+- If the input is an **array** → return the number of elements.
+
+**Requirements:**
+
+- You must write the correct type for the function parameter and the return type.
+- You must use type checking to handle each case (`typeof` or `Array.isArray`).
+
+**Sample Input:**
+
+```ts
+console.log(getLength('typescript'));
+console.log(getLength([10, 20, 30, 40]));
+```
+
+**Sample Output:**
+
+```ts
+10;
+4;
+```
+
+**Solution:**
+
+```ts
+// problem 2:
+const getLength = (value: string | any[]): number => {
+    if (typeof value === "string") {
+        return value.length
+    } else if (Array.isArray(value)) {
+        return value.length
+    }
+    return 0;
+}
+
+console.log(getLength('typescript')); // 10
+console.log(getLength([10, 20, 30, 40])); // 4
+```
+
+- **Problem 3:**
+
+Create a `Person` class with `name` and `age` properties. Add a method `getDetails` that returns a string with the person's name and age.
+
+**Requirements:**
+
+- You must use a constructor to initialize the properties.
+- The `getDetails` method should return a string in the format: `"Name: [name], Age: [age]"`.
+
+**Sample Input:**
+
+```ts
+const person1 = new Person('John Doe', 30);
+console.log(person1.getDetails());
+
+const person2 = new Person('Alice', 25);
+console.log(person2.getDetails());
+```
+
+**Sample Output:**
+
+```ts
+'Name: John Doe, Age: 30';
+'Name: Alice, Age: 25';
+```
+
+**Solution:**
+
+```ts
+// problem 3:
+class Person {
+    name: string;
+    age: number;
+
+    constructor(name: string, age: number) {
+        this.name = name;
+        this.age = age;
+    }
+
+    getDetails() {
+        return `Name: ${this.name}, Age: ${this.age}`;
+    }
+}
+
+const person1 = new Person('John Doe', 30);
+console.log(person1.getDetails()); // Name: John Doe, Age: 30
+
+const person2 = new Person('Alice', 25);
+console.log(person2.getDetails()); // Name: Alice, Age: 25
+```
+
+
+- **Problem 4:**
+
+Create a function **filterByRating** that accepts an array of items, where each item has the following properties:
+
+- `title` (string)
+- `rating` (number between 0 and 5)
+
+The function should return a new array containing only the items with a rating of 4 or more.
+
+**Requirements:**
+
+- You must write the correct type for the function parameter and the return type.
+- Do not mutate the original array.
+
+**Sample Input:**
+
+```ts
+const books = [
+  { title: 'Book A', rating: 4.5 },
+  { title: 'Book B', rating: 3.2 },
+  { title: 'Book C', rating: 5.0 },
+];
+
+console.log(filterByRating(books));
+```
+
+**Sample Output:**
+
+```ts
+[
+  { title: 'Book A', rating: 4.5 },
+  { title: 'Book C', rating: 5.0 },
+];
+```
+
+**Solution:**
+
+```ts
+// problem 4:
+
+type Book = {
+    title: string;
+    rating: number;
+};
+
+const filterByRating = (books: Book[]): Book[] => {
+
+    return books.filter(book => book.rating >= 4.0);
+}
+
+const books = [
+    { title: 'Book A', rating: 4.5 },
+    { title: 'Book B', rating: 3.2 },
+    { title: 'Book C', rating: 5.0 },
+];
+
+console.log(filterByRating(books));
+
+/*
+[
+  { title: 'Book A', rating: 4.5 },
+  { title: 'Book C', rating: 5.0 },
+];
+*/
+```
+
+- **Problem 5:**
+
+Create a function **filterActiveUsers** that accepts an array of user objects. Each user object contains `id`, `name`, `email`, and `isActive` properties. The function should return a **new array** containing only the users whose `isActive` property is `true`.
+
+**Requirements:**
+
+- You must write the correct type for the function parameter and the return type.
+- Do not mutate the original array.
+- Use type checking if necessary.
+
+**Sample Input:**
+
+```ts
+const users = [
+  { id: 1, name: 'Rakib', email: 'rakib@example.com', isActive: true },
+  { id: 2, name: 'Asha', email: 'asha@example.com', isActive: false },
+  { id: 3, name: 'Rumi', email: 'rumi@example.com', isActive: true },
+];
+
+console.log(filterActiveUsers(users));
+```
+
+**Sample Output:**
+
+```ts
+[
+  { id: 1, name: 'Rakib', email: 'rakib@example.com', isActive: true },
+  { id: 3, name: 'Rumi', email: 'rumi@example.com', isActive: true },
+];
+```
+
+**Solution:**
+
+```ts
+// problem 5:
+
+type User = {
+    id: number;
+    name: string;
+    email: string;
+    isActive: boolean;
+}
+
+const filterActiveUsers = (users: User[]): User[] => {
+    return users.filter(user => user.isActive)
+}
+
+const users = [
+    { id: 1, name: 'Rakib', email: 'rakib@example.com', isActive: true },
+    { id: 2, name: 'Asha', email: 'asha@example.com', isActive: false },
+    { id: 3, name: 'Rumi', email: 'rumi@example.com', isActive: true },
+];
+
+console.log(filterActiveUsers(users));
+
+/*
+[
+  { id: 1, name: 'Rakib', email: 'rakib@example.com', isActive: true },
+  { id: 3, name: 'Rumi', email: 'rumi@example.com', isActive: true },
+];
+*/
+```
+
+- **Problem 6:**
+
+Define an interface `Book` with the following properties:
+
+- `title` (string)
+- `author` (string)
+- `publishedYear` (number)
+- `isAvailable` (boolean)
+
+Then, create a function `printBookDetails` that accepts an object of type `Book` and prints its details to the console in the format: "Title: [title], Author: [author], Published: [publishedYear], Available: [Yes/No]".
+
+**Requirements:**
+
+- You must define the `Book` interface correctly.
+- The `printBookDetails` function must accept an object that follows to the `Book` interface.
+
+**Sample Input:**
+
+```ts
+const myBook: Book = {
+  title: 'The Great Gatsby',
+  author: 'F. Scott Fitzgerald',
+  publishedYear: 1925,
+  isAvailable: true,
+};
+
+printBookDetails(myBook);
+```
+
+**Sample Output:**
+
+```
+Title: The Great Gatsby, Author: F. Scott Fitzgerald, Published: 1925, Available: Yes
+```
+
+**Solution:**
+
+```ts
+// problem 6:
+
+interface Book {
+    title: string;
+    author: string;
+    publishedYear: number;
+    isAvailable: boolean;
+}
+
+const printBookDetails = (book: Book): void => {
+    console.log(`Title: ${book.title}, Author: ${book.author}, Published: ${book.publishedYear}, Available: ${book.isAvailable ? 'Yes' : 'No'}`);
+}
+
+const myBook: Book = {
+    title: 'The Great Gatsby',
+    author: 'F. Scott Fitzgerald',
+    publishedYear: 1925,
+    isAvailable: true,
+};
+
+printBookDetails(myBook);
+// Title: The Great Gatsby, Author: F. Scott Fitzgerald, Published: 1925, Available: Yes
+```
+
+- **Problem 7:**
+
+Create a function **getUniqueValues** that accepts two arrays and returns a new array containing only the unique values from both arrays, without any duplicates.
+
+Requirements:
+
+- You must write the correct type for the function parameter and the return type.
+- The function should handle arrays of strings or numbers.
+- You are not allowed to use any built-in methods to solve this problem.
+
+Sample Input:
+
+```ts
+const array1 = [1, 2, 3, 4, 5];
+const array2 = [3, 4, 5, 6, 7];
+console.log(getUniqueValues(array1, array2));
+```
+
+Sample Output:
+
+```ts
+[1, 2, 3, 4, 5, 6, 7];
+```
+
+**Solution:**
+
+```ts
+// problem 7:
+const getUniqueValues = (arr1: number[], arr2: number[]): number[] => {
+    // You are not allowed to use any built-in methods to solve this problem.
+    const uniqueValues: number[] = [];
+
+    for (let i = 0; i < arr1.length; i++) {
+        if (!uniqueValues.includes(arr1[i])) {
+            uniqueValues.push(arr1[i]);
+        }
+    }
+
+    for (let i = 0; i < arr2.length; i++) {
+        if (!uniqueValues.includes(arr2[i])) {
+            uniqueValues.push(arr2[i]);
+        }
+    }
+
+    return uniqueValues;
+}
+
+const array1 = [1, 2, 3, 4, 5];
+const array2 = [3, 4, 5, 6, 7];
+console.log(getUniqueValues(array1, array2)); // [1, 2, 3, 4, 5, 6, 7];
+```
+
+**Problem 8:**
+
+Create a function **calculateTotalPrice** that accepts an array of product objects. Each product object contains the following properties:
+
+- `name` (string)
+- `price` (number)
+- `quantity` (number)
+- **discount?**: optional number from **0–100**, representing a percentage discount
+
+The function should return the **total price** of all products in the array, taking into account the discount for each product (if provided).
+If the array is empty, return `0`.
+
+Requirements:
+
+- You must write the correct type for the function parameter and the return type.
+- Use array methods (`map`, `reduce`, etc.) to calculate the total.
+- The total price of each product is calculated as: `(price * quantity)`.
+- Correctly handle products with and without the `discount` property.
+
+**Sample Input:**
+
+```ts
+const products = [
+  { name: 'Pen', price: 10, quantity: 2 },
+  { name: 'Notebook', price: 25, quantity: 3, discount: 10 },
+  { name: 'Bag', price: 50, quantity: 1, discount: 20 },
+];
+
+console.log(calculateTotalPrice(products));
+```
+
+**Sample Output:**
+
+```ts
+127.5;
+```
+
+**Solution:**
+
+```ts
+// problem 8:
+
+type Product = {
+    name: string;
+    price: number;
+    quantity: number;
+    discount?: number;
+}
+
+const calculateTotalPrice = (products: Product[]): number => {
+
+    if (!products || products.length === 0) {
+        return 0;
+    }
+
+    let totalPrice = 0;
+    for (const product of products) {
+        const discount = product.discount ? (product.price * product.quantity * product.discount) / 100 : 0;
+        totalPrice += (product.price * product.quantity) - discount;
+    }
+    return totalPrice;
+}
+
+const products = [
+    { name: 'Pen', price: 10, quantity: 2 },
+    { name: 'Notebook', price: 25, quantity: 3, discount: 10 },
+    { name: 'Bag', price: 50, quantity: 1, discount: 20 },
+];
+
+console.log(calculateTotalPrice(products)); // 127.5;
 ```
